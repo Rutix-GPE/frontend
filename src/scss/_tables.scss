@@ -1,0 +1,70 @@
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: $dark-color;
+  background-color: $white;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  th,
+  td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid $light-color;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid $light-color;
+  }
+
+  tbody + tbody {
+    border-top: 2px solid $light-color;
+  }
+
+  .table {
+    background-color: $light-color;
+  }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: $background-color;
+}
+
+.table-hover tbody tr:hover {
+  background-color: $light-color;
+}
+
+.table-bordered {
+  border: 1px solid $light-color;
+
+  th,
+  td {
+    border: 1px solid $light-color;
+  }
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
+.table-dark {
+  color: $light-color;
+  background-color: $dark-color;
+
+  th,
+  td,
+  thead th {
+    border-color: #454d55;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+  }
+}

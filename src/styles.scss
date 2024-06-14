@@ -1,0 +1,26 @@
+@import 'scss/variables';
+@import 'scss/class';
+@import 'scss/buttons';
+@import 'scss/grid';
+@import 'scss/flex';
+@import 'scss/tables';
+@import 'scss/cards';
+@import 'scss/header';
+@import 'scss/forms';
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+  background-color: $background-color;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

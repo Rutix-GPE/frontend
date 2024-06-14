@@ -1,0 +1,66 @@
+@use 'sass:math';
+
+// Couleurs
+$primary-color: #174fb8;
+$secondary-color: #6c757d;
+$dark-color: #343a40;
+$light-color: #f8f9fa;
+$background-color: #f1f3f5;
+$text-color: #333;
+$white: #fff;
+$success-color: #26b37d;
+$danger-color: #dc3551;
+$warning-color: #ffb71b;
+$info-color: #17b3b8;
+
+// Espacements
+$spacer: 1rem;
+$padding: 1.5rem;
+$margin: 1rem;
+
+// Bordure
+$border-radius: 0.5rem;
+
+// Variables de typographie
+$font-family-base: 'Helvetica Neue', Arial, sans-serif;
+$line-height-base: 1.5;
+
+// Taille de police
+$font-size-base: 1rem;
+$font-size-large: 2.5rem;
+$font-size-medium: 1.25rem;
+$font-size-small: 0.875rem;
+
+// Grid
+$grid-columns: 12; // Nombre de colonnes dans la grille
+$gutter-width: 30px; // Largeur des gouttières entre les colonnes
+$grid-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+// Tables
+$table-bg: $light-color; // Couleur de fond des tableaux
+$table-border-color: #dee2e6; // Couleur des bordures de tableau
+$table-striped-bg: #f2f2f2; // Couleur de fond des lignes de tableau rayé
+$table-hover-bg: #e9ecef; // Couleur de fond des lignes de tableau en survol
+
+// Cartes
+$card-bg: #fff; // Couleur de fond de la carte
+$card-border-color: rgba(0, 0, 0, 0.125); // Couleur de la bordure de la carte
+$card-border-radius: 0.25rem; // Rayon de bordure de la carte
+$card-padding: $spacer; // Padding du corps de la carte
+$card-header-bg: rgba(0, 0, 0, 0.03); // Couleur de fond de l'en-tête de la carte
+$card-footer-bg: rgba(0, 0, 0, 0.03); // Couleur de fond du pied de la carte
+$card-header-border-color: rgba(0, 0, 0, 0.125); // Couleur de la bordure de l'en-tête de la carte
+$card-footer-border-color: rgba(0, 0, 0, 0.125); // Couleur de la bordure du pied de la carte
+$card-header-padding: math.div($spacer, 1.33); // Padding de l'en-tête de la carte
+$card-footer-padding: math.div($spacer, 1.33); // Padding du pied de la carte
+
+// Points de rupture pour la réactivité
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

@@ -1,0 +1,93 @@
+
+header {
+  background-color: $white;
+  padding: $spacer 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: $font-size-large;
+    font-weight: bold;
+    color: $dark-color;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    a {
+      margin-left: $spacer;
+      color: $text-color;
+      font-weight: 600;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      margin-left: $spacer;
+
+      .profile-name {
+        margin-right: $spacer;
+        font-weight: 600;
+      }
+
+      .logout-button {
+        background-color: $danger-color;
+        color: $white;
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: darken($danger-color, 10%);
+        }
+      }
+    }
+
+    .login-button {
+      background-color: $primary-color;
+      color: $white;
+      padding: 0.5rem 1rem;
+      border-radius: $border-radius;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .container {
+      flex-direction: column;
+    }
+
+    nav {
+      margin-top: $spacer;
+      justify-content: center;
+    }
+
+    .profile, .login-button {
+      margin-left: 0;
+      margin-top: $spacer;
+    }
+  }
+}

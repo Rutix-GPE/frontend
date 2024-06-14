@@ -1,0 +1,138 @@
+@use 'sass:math';
+
+@mixin margin-y($value) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin margin-x($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin margin-t($value) {
+  margin-top: $value;
+}
+
+@mixin margin-b($value) {
+  margin-bottom: $value;
+}
+
+@mixin margin-l($value) {
+  margin-left: $value;
+}
+
+@mixin margin-r($value) {
+  margin-right: $value;
+}
+
+.m-0 { margin: 0 !important; }
+.m-1 { margin: $spacer * 0.25 !important; }
+.m-2 { margin: $spacer * 0.5 !important; }
+.m-3 { margin: $spacer * 0.75 !important; }
+.m-4 { margin: $spacer !important; }
+.m-5 { margin: $spacer * 1.25 !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { @include margin-t($spacer * 0.25); }
+.mt-2 { @include margin-t($spacer * 0.5); }
+.mt-3 { @include margin-t($spacer * 0.75); }
+.mt-4 { @include margin-t($spacer); }
+.mt-5 { @include margin-t($spacer * 1.25); }
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { @include margin-b($spacer * 0.25); }
+.mb-2 { @include margin-b($spacer * 0.5); }
+.mb-3 { @include margin-b($spacer * 0.75); }
+.mb-4 { @include margin-b($spacer); }
+.mb-5 { @include margin-b($spacer * 1.25); }
+
+.ml-0 { margin-left: 0 !important; }
+.ml-1 { @include margin-l($spacer * 0.25); }
+.ml-2 { @include margin-l($spacer * 0.5); }
+.ml-3 { @include margin-l($spacer * 0.75); }
+.ml-4 { @include margin-l($spacer); }
+.ml-5 { @include margin-l($spacer * 1.25); }
+
+.mr-0 { margin-right: 0 !important; }
+.mr-1 { @include margin-r($spacer * 0.25); }
+.mr-2 { @include margin-r($spacer * 0.5); }
+.mr-3 { @include margin-r($spacer * 0.75); }
+.mr-4 { @include margin-r($spacer); }
+.mr-5 { @include margin-r($spacer * 1.25); }
+
+.mx-0 { margin-left: 0 !important; margin-right: 0 !important; }
+.mx-1 { @include margin-x($spacer * 0.25); }
+.mx-2 { @include margin-x($spacer * 0.5); }
+.mx-3 { @include margin-x($spacer * 0.75); }
+.mx-4 { @include margin-x($spacer); }
+.mx-5 { @include margin-x($spacer * 1.25); }
+
+.my-0 { margin-top: 0 !important; margin-bottom: 0 !important; }
+.my-1 { @include margin-y($spacer * 0.25); }
+.my-2 { @include margin-y($spacer * 0.5); }
+.my-3 { @include margin-y($spacer * 0.75); }
+.my-4 { @include margin-y($spacer); }
+.my-5 { @include margin-y($spacer * 1.25); }
+
+
+@mixin padding-x($x) {
+  padding-left: $x;
+  padding-right: $x;
+}
+
+@mixin padding-y($y) {
+  padding-top: $y;
+  padding-bottom: $y;
+}
+
+.p-0 { padding: 0 !important; }
+.pt-1 { @include padding-y($spacer * 0.25); }
+.pt-2 { @include padding-y($spacer * 0.5); }
+.pt-3 { @include padding-y($spacer * 0.75); }
+.pt-4 { @include padding-y($spacer); }
+.pt-5 { @include padding-y($spacer * 1.25); }
+
+// Similar classes for padding-bottom (pb), padding-left (pl), padding-right (pr), and padding (p)
+
+
+.h1 { font-size: 2.5rem; font-weight: 300; line-height: $line-height-base; }
+.h2 { font-size: 2rem; font-weight: 300; line-height: $line-height-base; }
+.h3 { font-size: 1.75rem; font-weight: 300; line-height: $line-height-base; }
+.h4 { font-size: 1.5rem; font-weight: 300; line-height: $line-height-base; }
+.h5 { font-size: 1.25rem; font-weight: 300; line-height: $line-height-base; }
+.h6 { font-size: 1rem; font-weight: 300; line-height: $line-height-base; }
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.text-primary { color: $primary-color !important; }
+.text-secondary { color: $secondary-color !important; }
+.text-success { color: $success-color !important; }
+.text-danger { color: $danger-color !important; }
+.text-warning { color: $warning-color !important; }
+.text-info { color: $info-color !important; }
+.text-light { color: $light-color !important; }
+.text-dark { color: $dark-color !important; }
+
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  padding-right: math.div($gutter-width, 2);
+  padding-left: math.div($gutter-width, 2);
+}
+
+
+.pointer {
+  cursor: pointer;
+}
