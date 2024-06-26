@@ -1,0 +1,7 @@
+{
+  "name": "rutix-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
