@@ -1,0 +1,21 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <h2 *ngIf="isLoginMode">Connexion</h2>
+    <h2 *ngIf="!isLoginMode">Inscription</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-input type="text" label="Nom d'utilisateur" labelPlacement="floating" [(ngModel)]="username" name="username" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="password" label="Mot de passe" labelPlacement="floating" [(ngModel)]="password" name="password" required></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="full" type="submit">{{ isLoginMode ? 'Se connecter' : 'S\'inscrire' }}</ion-button>
+    </form>
+    <ion-button expand="full" fill="outline" (click)="onSwitchMode()">
+      {{ isLoginMode ? 'Passer à l\'inscription' : 'Passer à la connexion' }}
+    </ion-button>
+  </div>
+</ion-content>

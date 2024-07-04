@@ -34,4 +34,14 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+//@import "@ionic/angular/css/palettes/dark.system.css";
+
+@import 'scss/variables';
+@import 'scss/class';
+@import 'scss/buttons';
+@import 'scss/grid';
+@import 'scss/flex';
+@import 'scss/tables';
+@import 'scss/cards';
+@import 'scss/header';
+@import 'scss/forms';
