@@ -25,8 +25,20 @@ export class AuthService {
     );
   }
 
-  register(username: string, password: string): Observable<User> {
-    return this.httpPost.postLogin('register', { username, password });
+  register(formData: any): Observable<User> {
+    const registerData = {
+      username: formData.username,
+      password: formData.password,
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      email: formData.email,
+      phonenumber: formData.phonenumber,
+      country: formData.country,
+      postalcode: formData.postalcode,
+      city: formData.city,
+      adress: formData.adress
+    };
+    return this.httpPost.postLogin('register', registerData);
   }
 
   loadCurrentUser(): void {

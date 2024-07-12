@@ -12,6 +12,19 @@ export class AuthComponent {
   isLoginMode = true;
   username = '';
   password = '';
+  step = 1;
+  formData: any = {
+    username: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    phonenumber: '',
+    country: '',
+    postalcode: '',
+    city: '',
+    adress: ''
+  };
   currentUser: User | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
@@ -20,6 +33,21 @@ export class AuthComponent {
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
+    if (!this.isLoginMode) {
+      this.step = 1;
+    }
+  }
+
+  nextStep() {
+    if (this.step < 3) {
+      this.step += 1;
+    }
+  }
+
+  previousStep() {
+    if (this.step > 1) {
+      this.step -= 1;
+    }
   }
 
   onSubmit() {
@@ -33,10 +61,11 @@ export class AuthComponent {
         error: (error) => console.error(error)
       });
     } else {
-      this.authService.register(this.username, this.password).subscribe({
+      this.authService.register(this.formData).subscribe({
         next: (response) => {
           console.log(response);
           this.isLoginMode = true;
+          this.step = 1;
         },
         error: (error) => console.error(error)
       });

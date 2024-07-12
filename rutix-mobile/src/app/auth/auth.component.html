@@ -1,19 +1,64 @@
 <ion-content [fullscreen]="true">
   <div id="container">
     <h2 *ngIf="isLoginMode">Connexion</h2>
-    <h2 *ngIf="!isLoginMode">Inscription</h2>
+    <h2 *ngIf="!isLoginMode && step === 1">Inscription - Étape 1</h2>
+    <h2 *ngIf="!isLoginMode && step === 2">Inscription - Étape 2</h2>
+    <h2 *ngIf="!isLoginMode && step === 3">Inscription - Étape 3</h2>
 
     <form (ngSubmit)="onSubmit()">
-      <ion-list>
+      <ion-list *ngIf="!isLoginMode && step === 1">
+        <ion-item>
+          <ion-input type="text" label="Nom d'utilisateur" labelPlacement="floating" [(ngModel)]="formData.username" name="username" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="password" label="Mot de passe" labelPlacement="floating" [(ngModel)]="formData.password" name="password" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="button" (click)="nextStep()">Suivant</ion-button>
+      </ion-list>
+
+      <ion-list *ngIf="!isLoginMode && step === 2">
+        <ion-item>
+          <ion-input type="text" label="Prénom" labelPlacement="floating" [(ngModel)]="formData.firstname" name="firstname" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" label="Nom" labelPlacement="floating" [(ngModel)]="formData.lastname" name="lastname" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="email" label="Email" labelPlacement="floating" [(ngModel)]="formData.email" name="email" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="button" (click)="nextStep()">Suivant</ion-button>
+      </ion-list>
+
+      <ion-list *ngIf="!isLoginMode && step === 3">
+        <ion-item>
+          <ion-input type="tel" label="Numéro de téléphone" labelPlacement="floating" [(ngModel)]="formData.phonenumber" name="phonenumber" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" label="Pays" labelPlacement="floating" [(ngModel)]="formData.country" name="country" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" label="Code postal" labelPlacement="floating" [(ngModel)]="formData.postalcode" name="postalcode" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" label="Ville" labelPlacement="floating" [(ngModel)]="formData.city" name="city" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" label="Adresse" labelPlacement="floating" [(ngModel)]="formData.adress" name="adress" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit">S'inscrire</ion-button>
+      </ion-list>
+
+      <ion-list *ngIf="isLoginMode">
         <ion-item>
           <ion-input type="text" label="Nom d'utilisateur" labelPlacement="floating" [(ngModel)]="username" name="username" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-input type="password" label="Mot de passe" labelPlacement="floating" [(ngModel)]="password" name="password" required></ion-input>
         </ion-item>
+        <ion-button expand="full" type="submit">Se connecter</ion-button>
       </ion-list>
-      <ion-button expand="full" type="submit">{{ isLoginMode ? 'Se connecter' : 'S\'inscrire' }}</ion-button>
     </form>
+
     <ion-button expand="full" fill="outline" (click)="onSwitchMode()">
       {{ isLoginMode ? 'Passer à l\'inscription' : 'Passer à la connexion' }}
     </ion-button>
