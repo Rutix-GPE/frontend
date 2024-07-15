@@ -73,14 +73,15 @@ export class AuthComponent {
   }
 
   fetchCurrentUser() {
-    this.authService.getCurrentUser().subscribe({
+   /* this.authService.getCurrentUser().subscribe({
       next: (user) => {
         this.currentUser = user;
         this.authService.setCurrentUser(user);
         console.log('Current User:', this.currentUser);
-        this.router.navigate(['/user-list']);
+        this.router.navigate(['/home']);
       },
       error: (error) => console.error(error)
-    });
+    });*/
+    this.router.navigate(['/home']);
   }
 }

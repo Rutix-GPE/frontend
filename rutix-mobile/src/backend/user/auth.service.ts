@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   login(username: string, password: string): Observable<{ token: string }> {
-    return this.httpPost.postLogin('authenticate', { username, password }).pipe(
+    return this.httpPost.postLogin('user/authenticate', { username, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
         this.loadCurrentUser();
@@ -32,13 +32,13 @@ export class AuthService {
       firstname: formData.firstname,
       lastname: formData.lastname,
       email: formData.email,
-      phonenumber: formData.phonenumber,
+      numberphone: formData.phonenumber,
       country: formData.country,
       postalcode: formData.postalcode,
       city: formData.city,
       adress: formData.adress
     };
-    return this.httpPost.postLogin('register', registerData);
+    return this.httpPost.postLogin('user/register', registerData);
   }
 
   loadCurrentUser(): void {
