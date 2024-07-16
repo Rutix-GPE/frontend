@@ -77,6 +77,8 @@ nom-du-repo/
 ├── src/
 │   ├── app/
 │   ├── assets/
+|   ├── backend/
+|   ├── core/
 │   ├── environments/
 │   ├── theme/
 │   ├── index.html
