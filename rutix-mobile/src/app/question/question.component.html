@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ currentQuestion.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="currentQuestion">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ currentQuestion.content }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Input selon le type de la question -->
+      <ion-item *ngIf="currentQuestion.type === 'text'">
+        <ion-label position="stacked">Réponse</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="currentQuestion.type === 'number'">
+        <ion-label position="stacked">Réponse</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+
+      <!-- Sélection de l'heure uniquement -->
+      <ion-item *ngIf="currentQuestion.type === 'time'">
+        <ion-label position="stacked">Réponse</ion-label>
+        <ion-datetime
+          presentation="time"
+          display-format="HH:mm"
+          picker-format="HH:mm"
+          hour-cycle="h23">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choices">
+        <ion-item *ngFor="let choice of currentQuestion.choices">
+          <ion-label>{{ choice }}</ion-label>
+          <ion-checkbox slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Suivant</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

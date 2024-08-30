@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.httpGet.one('me');
+    return this.httpGet.one('user/me');
   }
 
   logout(): void {
