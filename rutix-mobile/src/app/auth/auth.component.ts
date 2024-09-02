@@ -64,8 +64,14 @@ export class AuthComponent {
       this.authService.register(this.formData).subscribe({
         next: (response) => {
           console.log(response);
-          this.isLoginMode = true;
-          this.step = 1;
+          this.authService.login(this.username, this.password).subscribe({
+            next: (response) => {
+              localStorage.setItem('token', response.token);
+              this.fetchCurrentUser();
+              this.router.navigate(['/question'])
+            },
+            error: (error) => console.error(error)
+          });
         },
         error: (error) => console.error(error)
       });

@@ -10,13 +10,18 @@ import { QuestionService } from 'src/backend/question/question.service';
 export class QuestionComponent implements OnInit {
   questions: Question[] = [];
   currentQuestionIndex: number = 0;
+  responses!: {
+    userID: number,
+    questionId: number,
+    response: string[]
+  }[]
 
   constructor(private questionService: QuestionService) { }
 
   ngOnInit(): void {
     this.questionService.listAll().subscribe((questions) => {
       this.questions = questions;
-      this.currentQuestionIndex = 0; // Assure que la première question est affichée
+      this.currentQuestionIndex = 0;
     });
   }
 
@@ -34,5 +39,9 @@ export class QuestionComponent implements OnInit {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
     }
+  }
+
+  onSubmit() {
+    console.log(this.responses)
   }
 }

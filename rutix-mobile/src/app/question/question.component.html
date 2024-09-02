@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ currentQuestion.name }}</ion-title>
+    <ion-title *ngIf="currentQuestion">{{ currentQuestion.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
 
     <ion-card-content>
       <!-- Input selon le type de la question -->
-      <ion-item *ngIf="currentQuestion.type === 'text'">
+      <ion-item *ngIf="currentQuestion.type === 'text' || currentQuestion.type === 'textarea'">
         <ion-label position="stacked">Réponse</ion-label>
         <ion-input type="text"></ion-input>
       </ion-item>
@@ -33,11 +33,20 @@
         </ion-datetime>
       </ion-item>
 
-      <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choices">
-        <ion-item *ngFor="let choice of currentQuestion.choices">
+      <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choice">
+        <ion-item *ngFor="let choice of currentQuestion.choice">
           <ion-label>{{ choice }}</ion-label>
           <ion-checkbox slot="start"></ion-checkbox>
         </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="currentQuestion.type === 'radio' && currentQuestion.choice">
+        <ion-radio-group>
+          <ion-item *ngFor="let choice of currentQuestion.choice">
+            <ion-label>{{ choice }}</ion-label>
+            <ion-radio slot="start"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
       </ion-list>
     </ion-card-content>
   </ion-card>

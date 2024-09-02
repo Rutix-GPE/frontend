@@ -3,7 +3,7 @@ export interface Question {
   name: string;
   content: string;
   type: string;
-  choices?: string[];
+  choice?: string[];
   page: number;
   creationDate?: Date;
   updatedDate?: Date;
