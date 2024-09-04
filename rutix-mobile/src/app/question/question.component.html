@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content *ngIf="currentQuestion">
+  {{currentResponse}}
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{ currentQuestion.content }}</ion-card-title>
@@ -14,18 +15,19 @@
       <!-- Input selon le type de la question -->
       <ion-item *ngIf="currentQuestion.type === 'text' || currentQuestion.type === 'textarea'">
         <ion-label position="stacked">Réponse</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input [(ngModel)]="currentResponse" type="text"></ion-input>
       </ion-item>
 
       <ion-item *ngIf="currentQuestion.type === 'number'">
         <ion-label position="stacked">Réponse</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input [(ngModel)]="currentResponse" type="number"></ion-input>
       </ion-item>
 
       <!-- Sélection de l'heure uniquement -->
       <ion-item *ngIf="currentQuestion.type === 'time'">
-        <ion-label position="stacked">Réponse</ion-label>
+        <ion-label position="stacked">Sélectionner l'heure</ion-label>
         <ion-datetime
+          [(ngModel)]="currentResponse"
           presentation="time"
           display-format="HH:mm"
           picker-format="HH:mm"
@@ -33,18 +35,24 @@
         </ion-datetime>
       </ion-item>
 
+
+      <!-- Checkboxes -->
       <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choice">
         <ion-item *ngFor="let choice of currentQuestion.choice">
           <ion-label>{{ choice }}</ion-label>
-          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-checkbox
+            slot="start"
+            (ionChange)="onCheckboxChange(choice, $event)"
+            [checked]="currentResponse?.includes(choice)">
+          </ion-checkbox>
         </ion-item>
       </ion-list>
 
       <ion-list *ngIf="currentQuestion.type === 'radio' && currentQuestion.choice">
-        <ion-radio-group>
+        <ion-radio-group [(ngModel)]="currentResponse">
           <ion-item *ngFor="let choice of currentQuestion.choice">
             <ion-label>{{ choice }}</ion-label>
-            <ion-radio slot="start"></ion-radio>
+            <ion-radio [value]="choice" slot="start"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
@@ -57,8 +65,11 @@
         <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Suivant</ion-button>
+        <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">Suivant</ion-button>
       </ion-buttons>
+
+      <!-- Afficher le bouton Soumettre uniquement à la fin -->
+      <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()">Soumettre</ion-button>
     </ion-toolbar>
   </ion-footer>
 </ion-content>

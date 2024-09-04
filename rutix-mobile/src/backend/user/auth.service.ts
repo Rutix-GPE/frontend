@@ -42,8 +42,28 @@ export class AuthService {
   }
 
   loadCurrentUser(): void {
-    this.getCurrentUser().subscribe(user => this.currentUserSubject.next(user));
+    console.log('loadUser');
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.getCurrentUser().subscribe({
+        next: (user) => {
+          console.log(user);
+
+          this.currentUserSubject.next(user);  // Mettre à jour l'utilisateur dans le BehaviorSubject
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement de l\'utilisateur', err);
+          this.logout();  // En cas d'échec, on supprime le token
+        },
+        complete: () => {
+          console.log('Chargement de l\'utilisateur terminé');
+        }
+      });
+    }
   }
+
 
   getCurrentUser(): Observable<User> {
     return this.httpGet.one('user/me');

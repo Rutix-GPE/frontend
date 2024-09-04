@@ -10,8 +10,8 @@ import { User } from 'src/backend/user/user.interface';
 })
 export class AuthComponent {
   isLoginMode = true;
-  username = '';
-  password = '';
+  username = ''
+  password = ''
   step = 1;
   formData: any = {
     username: '',
@@ -52,7 +52,7 @@ export class AuthComponent {
 
   onSubmit() {
     if (this.isLoginMode) {
-      this.authService.login(this.username, this.password).subscribe({
+      this.authService.login(this.formData.username, this.formData.password).subscribe({
         next: (response) => {
           console.log(response);
           localStorage.setItem('token', response.token);
@@ -64,7 +64,7 @@ export class AuthComponent {
       this.authService.register(this.formData).subscribe({
         next: (response) => {
           console.log(response);
-          this.authService.login(this.username, this.password).subscribe({
+          this.authService.login(this.formData.username, this.formData.password).subscribe({
             next: (response) => {
               localStorage.setItem('token', response.token);
               this.fetchCurrentUser();
