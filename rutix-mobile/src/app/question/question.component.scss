@@ -1,0 +1,49 @@
+/* Complete SCSS */
+:host {
+    ion-card-content {
+      padding: 20px;
+  
+      ion-item {
+        margin-bottom: 20px;  /* Space between form elements */
+  
+        ion-label {
+          font-family: 'Poppins', sans-serif;
+          color: #333;
+          margin-bottom: 10px;  /* Space between label and input */
+        }
+  
+        ion-input,
+        ion-datetime {
+          border: 2px solid #FF7043;
+          border-radius: 8px;
+          padding: 8px;
+          background-color: #f2f2f2;
+          font-family: 'Poppins', sans-serif;
+          margin-top: 10px;  /* Space above input */
+          
+          /* Placeholder styling */
+          ::placeholder {
+            color: #999;  /* Light grey color for placeholder */
+          }
+        }
+  
+        ion-checkbox,
+        ion-radio {
+          --background: #FF7043;
+        }
+      }
+    }
+  
+    ion-footer {
+      ion-toolbar {
+        background-color: #4CAF50;
+  
+        ion-button {
+          --background: #FF7043;
+          font-family: 'Poppins', sans-serif;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+  

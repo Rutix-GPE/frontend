@@ -5,71 +5,74 @@
 </ion-header>
 
 <ion-content *ngIf="currentQuestion">
-  {{currentResponse}}
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{ currentQuestion.content }}</ion-card-title>
-    </ion-card-header>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="8">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ currentQuestion.content }}</ion-card-title>
+          </ion-card-header>
 
-    <ion-card-content>
-      <!-- Input selon le type de la question -->
-      <ion-item *ngIf="currentQuestion.type === 'text' || currentQuestion.type === 'textarea'">
-        <ion-label position="stacked">Réponse</ion-label>
-        <ion-input [(ngModel)]="currentResponse" type="text"></ion-input>
-      </ion-item>
+          <ion-card-content>
+            <!-- Input selon le type de la question -->
+            <ion-item *ngIf="currentQuestion.type === 'text' || currentQuestion.type === 'textarea'" lines="none">
+              <ion-input [(ngModel)]="currentResponse" type="text" class="input-highlight" placeholder="Réponse"></ion-input>
+            </ion-item>
 
-      <ion-item *ngIf="currentQuestion.type === 'number'">
-        <ion-label position="stacked">Réponse</ion-label>
-        <ion-input [(ngModel)]="currentResponse" type="number"></ion-input>
-      </ion-item>
+            <ion-item *ngIf="currentQuestion.type === 'number'" lines="none">
+              <ion-input [(ngModel)]="currentResponse" type="number" class="input-highlight" placeholder="Réponse"></ion-input>
+            </ion-item>
 
-      <!-- Sélection de l'heure uniquement -->
-      <ion-item *ngIf="currentQuestion.type === 'time'">
-        <ion-label position="stacked">Sélectionner l'heure</ion-label>
-        <ion-datetime
-          [(ngModel)]="currentResponse"
-          presentation="time"
-          display-format="HH:mm"
-          picker-format="HH:mm"
-          hour-cycle="h23">
-        </ion-datetime>
-      </ion-item>
+            <!-- Time selection -->
+            <ion-item *ngIf="currentQuestion.type === 'time'" lines="none">
+              <ion-datetime
+                [(ngModel)]="currentResponse"
+                presentation="time"
+                display-format="HH:mm"
+                picker-format="HH:mm"
+                placeholder="Sélectionner l'heure"
+                hour-cycle="h23">
+              </ion-datetime>
+            </ion-item>
 
+            <!-- Checkboxes -->
+            <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choice">
+              <ion-item *ngFor="let choice of currentQuestion.choice" lines="none">
+                <ion-label>{{ choice }}</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  (ionChange)="onCheckboxChange(choice, $event)"
+                  [checked]="currentResponse?.includes(choice)">
+                </ion-checkbox>
+              </ion-item>
+            </ion-list>
 
-      <!-- Checkboxes -->
-      <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choice">
-        <ion-item *ngFor="let choice of currentQuestion.choice">
-          <ion-label>{{ choice }}</ion-label>
-          <ion-checkbox
-            slot="start"
-            (ionChange)="onCheckboxChange(choice, $event)"
-            [checked]="currentResponse?.includes(choice)">
-          </ion-checkbox>
-        </ion-item>
-      </ion-list>
+            <!-- Radio buttons -->
+            <ion-list *ngIf="currentQuestion.type === 'radio' && currentQuestion.choice">
+              <ion-radio-group [(ngModel)]="currentResponse">
+                <ion-item *ngFor="let choice of currentQuestion.choice" lines="none">
+                  <ion-label>{{ choice }}</ion-label>
+                  <ion-radio [value]="choice" slot="start"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
 
-      <ion-list *ngIf="currentQuestion.type === 'radio' && currentQuestion.choice">
-        <ion-radio-group [(ngModel)]="currentResponse">
-          <ion-item *ngFor="let choice of currentQuestion.choice">
-            <ion-label>{{ choice }}</ion-label>
-            <ion-radio [value]="choice" slot="start"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+        <ion-footer>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">Suivant</ion-button>
+            </ion-buttons>
 
-  <ion-footer>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">Suivant</ion-button>
-      </ion-buttons>
-
-      <!-- Afficher le bouton Soumettre uniquement à la fin -->
-      <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()">Soumettre</ion-button>
-    </ion-toolbar>
-  </ion-footer>
+            <!-- Show Submit button only at the end -->
+            <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()">Soumettre</ion-button>
+          </ion-toolbar>
+        </ion-footer>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
