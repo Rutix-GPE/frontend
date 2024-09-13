@@ -17,10 +17,12 @@ export class AuthService {
   ) {}
 
   login(username: string, password: string): Observable<{ token: string }> {
+
     return this.httpPost.postLogin('user/authenticate', { username, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
         this.loadCurrentUser();
+        console.log("je suis la ")
       })
     );
   }

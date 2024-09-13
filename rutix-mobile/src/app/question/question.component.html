@@ -19,9 +19,15 @@
               <ion-input [(ngModel)]="currentResponse" type="text" class="input-highlight" placeholder="Réponse"></ion-input>
             </ion-item>
 
+            <!-- Input de type number avec validation -->
             <ion-item *ngIf="currentQuestion.type === 'number'" lines="none">
-              <ion-input [(ngModel)]="currentResponse" type="number" class="input-highlight" placeholder="Réponse"></ion-input>
+              <ion-input [(ngModel)]="currentResponse" type="number" class="input-highlight" placeholder="Réponse" (ionChange)="validateCurrentResponse()"></ion-input>
             </ion-item>
+
+            <!-- Message d'erreur pour les réponses invalides de type number -->
+            <div *ngIf="errorMessage" style="color: red; padding-left: 16px;">
+              {{ errorMessage }}
+            </div>
 
             <!-- Time selection -->
             <ion-item *ngIf="currentQuestion.type === 'time'" lines="none">
@@ -65,11 +71,12 @@
               <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-              <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">Suivant</ion-button>
+              <!-- Désactiver le bouton Suivant si la réponse n'est pas valide -->
+              <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()" [disabled]="isNextDisabled()">Suivant</ion-button>
             </ion-buttons>
 
             <!-- Show Submit button only at the end -->
-            <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()">Soumettre</ion-button>
+            <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()" [disabled]="isNextDisabled()">Soumettre</ion-button>
           </ion-toolbar>
         </ion-footer>
       </ion-col>
