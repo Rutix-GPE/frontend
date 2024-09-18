@@ -22,8 +22,10 @@ export class ResponseService {
   saveResponse(questionId: number, responseData: Response): Observable<any> {
     return this.httpPost.post(`user-response/new/${questionId}`, responseData);
   }
-  getResponseByQuestionId(questionId: number): Observable<Response> {
-    return this.httpGet.one(`user-response/question/${questionId}`);
+
+     // Récupérer une réponse d'un utilisateur pour une question donnée
+  getUserResponse(userId: number, questionId: number): Observable<Response> {
+    return this.httpGet.one(`response/user/${userId}/question/${questionId}`);
   }
 
 }

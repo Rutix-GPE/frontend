@@ -1,18 +1,16 @@
-<ion-card *ngFor="let question of questions">
-  <ion-card-header>
-    <ion-card-title>{{ question.content }}</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <p><strong>Question :</strong> {{ question.name }}</p>
-    <p><strong>Type :</strong> {{ question.type }}</p>
-    <p><strong>Réponse :</strong>
-      <span *ngIf="getResponseByQuestionId(question.id) as response">
-        {{ response || 'Aucune réponse' }}
-        <br>
-        <small><strong>Date de création :</strong> {{ response }}</small>
-        <br>
-        <small><strong>Date de mise à jour :</strong> {{ response }}</small>
-      </span>
-    </p>
-  </ion-card-content>
-</ion-card>
+<ion-content>
+  <ion-card *ngFor="let question of questions">
+    <ion-card-header>
+      <ion-card-title>{{ question.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Question :</strong> {{ question.content }}</p>
+      <p><strong>Réponse :</strong>
+        <span>
+          <!-- Afficher la réponse associée à la question -->
+          {{ userResponses[question.id]?.response || 'Pas de réponse disponible' }}
+        </span>
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
