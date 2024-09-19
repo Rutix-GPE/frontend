@@ -22,7 +22,6 @@ export class AuthService {
       tap(response => {
         localStorage.setItem('token', response.token);
         this.loadCurrentUser();
-        console.log("je suis la ")
       })
     );
   }
@@ -44,7 +43,6 @@ export class AuthService {
   }
 
   loadCurrentUser(): void {
-    console.log('loadUser');
 
     const token = localStorage.getItem('token');
 

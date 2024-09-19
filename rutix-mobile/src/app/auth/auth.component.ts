@@ -52,13 +52,8 @@ export class AuthComponent {
 
   onSubmit() {
     if (this.isLoginMode) {
-      console.log("je suis la 2")
-      console.log(this.password)
-      console.log(this.username)
       this.authService.login(this.username, this.password).subscribe({
         next: (response) => {
-          console.log(response);
-          console.log("je suis la 2")
           localStorage.setItem('token', response.token);
           this.fetchCurrentUser();
         },

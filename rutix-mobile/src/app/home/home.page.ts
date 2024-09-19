@@ -13,8 +13,8 @@ import { Response } from 'src/backend/response/response.interface';
 })
 export class HomePage implements OnInit {
   questions: Question[] = [];
-  userResponses: { [questionId: number]: Response | null } = {};  // Map of responses keyed by questionId
-  currentUser: User | null = null;  // Initialize with null
+  userResponseslist: { [questionId: number]: Response | null } = {}; 
+  currentUser: User | null = null;  
 
   constructor(
     private questionService: QuestionService,
@@ -26,35 +26,31 @@ export class HomePage implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.loadQuestions();  // Load questions regardless of user existence
+      if(this.currentUser!= null){
+        this.loadUserResponsesForUser(this.currentUser?.id)
+        console.log("je suis passé par la ")
+        console.log(this.userResponseslist)
+      }
     });
   }
 
   loadQuestions(): void {
     this.questionService.listAll().subscribe(questions => {
       this.questions = questions;
-      if (this.currentUser) {
-        this.loadUserResponses();  // Fetch responses for the current user if they are logged in
-      }
     });
   }
-
-  loadUserResponses(): void {
-    if (!this.currentUser) {
-      console.warn('No user is logged in. Cannot load responses.');
-      return;
-    }
-
-    this.questions.forEach(question => {
-      if (this.currentUser) { // Check again within the loop
-        this.responseService.getUserResponse(this.currentUser.id, question.id).subscribe({
-          next: (response: Response) => {
-            this.userResponses[question.id] = response;
-          },
-          error: (error) => {
-            console.error(`Error fetching response for question ${question.id}:`, error);
-            this.userResponses[question.id] = null;  // Assign null if error occurs
-          }
+   
+  loadUserResponsesForUser(userId: number): void {
+    this.responseService.getUserResponsesByUserId(userId).subscribe({
+      next: (responses: Response[]) => {
+        // Populate userResponses by mapping the responses to their questionId
+        responses.forEach(response => {
+          this.userResponseslist[response.questionId] = response;
+          
         });
+      },
+      error: (error) => {
+        console.error(`Error fetching responses for user ${userId}:`, error);
       }
     });
   }

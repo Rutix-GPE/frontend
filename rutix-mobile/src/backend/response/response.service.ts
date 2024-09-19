@@ -13,10 +13,11 @@ export class ResponseService {
     private httpPost: CoreHttpClientPost
   ) {}
 
-  // Récupérer toutes les réponses d'un utilisateur
-  getUserResponses(): Observable<Response[]> {
-    return this.httpGet.list(`user-response/list`); // Pas besoin de type argument ici
-  }
+
+  // Récupérer toutes les réponses pour un utilisateur donné
+getUserResponsesByUserId(userId: number): Observable<Response[]> {
+  return this.httpGet.list(`response/user/${userId}`);
+}
 
   // Ajouter ou mettre à jour une réponse
   saveResponse(questionId: number, responseData: Response): Observable<any> {

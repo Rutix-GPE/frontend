@@ -1,4 +1,5 @@
 <ion-content>
+  <!-- Boucle sur les questions -->
   <ion-card *ngFor="let question of questions">
     <ion-card-header>
       <ion-card-title>{{ question.name }}</ion-card-title>
@@ -7,8 +8,8 @@
       <p><strong>Question :</strong> {{ question.content }}</p>
       <p><strong>Réponse :</strong>
         <span>
-          <!-- Afficher la réponse associée à la question -->
-          {{ userResponses[question.id]?.response || 'Pas de réponse disponible' }}
+          <!-- Vérifie s'il existe une réponse associée à cette question dans la liste userResponseslist -->
+          {{ userResponseslist[question.id]?.response || 'Pas de réponse disponible' }}
         </span>
       </p>
     </ion-card-content>
