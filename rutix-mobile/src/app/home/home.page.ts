@@ -15,6 +15,7 @@ export class HomePage implements OnInit {
   questions: Question[] = [];
   userResponseslist: { [questionId: number]: Response | null } = {}; 
   currentUser: User | null = null;  
+  showResponses = false;
 
   constructor(
     private questionService: QuestionService,
@@ -38,6 +39,9 @@ export class HomePage implements OnInit {
     this.questionService.listAll().subscribe(questions => {
       this.questions = questions;
     });
+  }
+  toggleDisplay(): void {
+    this.showResponses = !this.showResponses;  // Basculer l'affichage des réponses
   }
    
   loadUserResponsesForUser(userId: number): void {

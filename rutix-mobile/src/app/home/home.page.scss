@@ -1,82 +1,125 @@
-.oc-style {
-  background-color: #f8f9fa;
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #f9f9f9;
+}
 
+/* Style du header principal */
+.main-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* Bouton de type ion-button */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+ion-button {
+  --background: #ff6f61;
+  --background-hover: #ff5a4f;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Liste de questions */
+.question-list {
+  margin-top: 20px;
+}
+
+/* Article de question individuel */
+.question-item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+/* Header de la question */
+.question-header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+}
+
+.question-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Contenu de la question */
+.question-content {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.question-description {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.response-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+/* Titre de la réponse */
+.response-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Texte de la réponse */
+.response-text {
+  font-size: 1.1rem;
+  color: #666;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Styles pour les media queries */
+@media (max-width: 768px) {
   .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
   }
 
-  .main-header {
-    text-align: center;
-    margin-bottom: 30px;
-
-    .page-title {
-      font-size: 2.5rem;
-      color: #34495e;
-      font-weight: 700;
-    }
-
-    .intro-text {
-      font-size: 1.2rem;
-      color: #7f8c8d;
-      margin-top: 10px;
-    }
+  .page-title {
+    font-size: 2rem;
   }
 
-  .question-list {
-    .question-item {
-      background-color: #ecf0f1;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      transition: transform 0.2s;
+  .question-title {
+    font-size: 1.3rem;
+  }
 
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      }
+  .response-title {
+    font-size: 1.2rem;
+  }
 
-      .question-header {
-        border-bottom: 1px solid #bdc3c7;
-        margin-bottom: 15px;
-
-        .question-title {
-          font-size: 1.8rem;
-          color: #2c3e50;
-          font-weight: 600;
-        }
-      }
-
-      .question-content {
-        .question-description {
-          font-size: 1.1rem;
-          color: #2c3e50;
-          margin-bottom: 15px;
-        }
-
-        .response-section {
-          background-color: #e0e4e7;
-          padding: 10px;
-          border-radius: 5px;
-
-          .response-title {
-            font-size: 1.2rem;
-            color: #34495e;
-            font-weight: 500;
-            margin-bottom: 5px;
-          }
-
-          .response-text {
-            font-size: 1rem;
-            color: #2c3e50;
-          }
-        }
-      }
-    }
+  ion-button {
+    font-size: 1rem;
   }
 }

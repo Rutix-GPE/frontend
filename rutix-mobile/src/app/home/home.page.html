@@ -2,11 +2,18 @@
   <section class="container">
     <header class="main-header">
       <h1 class="page-title">Liste des Questions et Réponses</h1>
-      <p class="intro-text">Retrouvez ici les questions et leurs réponses associées.</p>
+      <p class="intro-text">Cliquez ci-dessous pour afficher vos réponses.</p>
     </header>
 
-    <div class="question-list">
-      <!-- Boucle sur les questions -->
+    <!-- Bouton pour afficher les questions et réponses -->
+    <div class="button-container">
+      <ion-button expand="full" (click)="toggleDisplay()">
+        Afficher vos réponses
+      </ion-button>
+    </div>
+
+    <!-- Afficher les questions et réponses seulement si showResponses est vrai -->
+    <div *ngIf="showResponses" class="question-list">
       <article *ngFor="let question of questions" class="question-item">
         <header class="question-header">
           <h2 class="question-title">{{ question.name }}</h2>
@@ -16,7 +23,6 @@
           <div class="response-section">
             <h3 class="response-title">Réponse :</h3>
             <p class="response-text">
-              <!-- Vérifie s'il existe une réponse associée à cette question dans la liste userResponseslist -->
               {{ userResponseslist[question.id]?.response || 'Pas de réponse disponible' }}
             </p>
           </div>
