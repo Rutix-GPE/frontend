@@ -19,6 +19,12 @@
   color: white; /* Texte blanc dans la barre latérale */
   height: 100vh; /* S'étend sur toute la hauteur de la vue */
   position: fixed; /* Rendre la barre fixe pour qu'elle reste visible en faisant défiler la page */
+  transition: width 0.3s; /* Ajoute une transition pour l'animation */
+}
+
+/* État réduit de la barre latérale */
+.sidebar.collapsed {
+  width: 60px; /* Largeur réduite lorsque la barre est cachée */
 }
 
 /* Contenu principal */
@@ -73,14 +79,19 @@
 
 /* Styles adaptatifs pour écrans plus petits */
 @media (max-width: 768px) {
-  .container {
-    margin-left: 0; /* Pas d'espace pour la barre latérale sur mobile */
-    width: 100%;
+  .main-container {
+    flex-direction: column; /* Afficher les éléments verticalement */
   }
 
   .sidebar {
     width: 100%; /* Occupation complète de la largeur */
-    padding: 0.5rem; /* Réduction du padding pour les petits écrans */
+    height: auto; /* Ajuste la hauteur pour s'adapter au contenu */
+    position: relative; /* Permet de positionner la barre normalement sur les petits écrans */
+  }
+
+  .container {
+    margin-left: 0; /* Pas d'espace pour la barre latérale sur mobile */
+    width: 100%;
   }
 
   .sun-icon {
