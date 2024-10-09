@@ -1,33 +1,57 @@
 <ion-content class="oc-style">
-  <section class="container">
-    <header class="main-header">
-      <h1 class="page-title">Liste des Questions et Réponses</h1>
-      <p class="intro-text">Cliquez ci-dessous pour afficher vos réponses.</p>
-    </header>
-
-    <!-- Bouton pour afficher les questions et réponses -->
-    <div class="button-container">
-      <ion-button expand="full" (click)="toggleDisplay()">
-        Afficher vos réponses
-      </ion-button>
+  <div class="main-container">
+    <!-- Barre latérale -->
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <div class="button-container">
+        <ion-button expand="full" (click)="toggleDisplay('responses')">
+          Afficher vos réponses
+        </ion-button>
+        <ion-button expand="full" (click)="toggleDisplay('categories')">
+          Catégories routines
+        </ion-button>
+      </div>
     </div>
 
-    <!-- Afficher les questions et réponses seulement si showResponses est vrai -->
-    <div *ngIf="showResponses" class="question-list">
-      <article *ngFor="let question of questions" class="question-item">
-        <header class="question-header">
-          <h2 class="question-title">{{ question.name }}</h2>
-        </header>
-        <section class="question-content">
-          <p class="question-description">{{ question.content }}</p>
-          <div class="response-section">
-            <h3 class="response-title">Réponse :</h3>
-            <p class="response-text">
-              {{ userResponseslist[question.id]?.response || 'Pas de réponse disponible' }}
-            </p>
-          </div>
-        </section>
-      </article>
-    </div>
-  </section>
+    <!-- Barre d'indication -->
+    <div class="sidebar-indicator"></div>
+
+    <!-- Contenu principal -->
+    <section class="container">
+      
+
+      <!-- Afficher les questions -->
+      <div *ngIf="showResponses" class="question-list">
+        <article *ngFor="let question of questions" class="question-item">
+          <header class="question-header">
+            <h2 class="question-title">{{ question.name }}</h2>
+          </header>
+          <section class="question-content">
+            <p class="question-description">{{ question.content }}</p>
+            <div class="response-section">
+              <h3 class="response-title">Réponse :</h3>
+              <p class="response-text">
+                {{ userResponseslist[question.id]?.response || 'Pas de réponse disponible' }}
+              </p>
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <!-- Afficher les catégories -->
+      <div *ngIf="showCategories" class="category-list">
+        <h2 class="page-title">Catégories de Routines</h2>
+        <div *ngIf="categories.length > 0; else noCategories">
+          <ul>
+            <li *ngFor="let category of categories">
+              {{ category.name }}
+            </li>
+          </ul>
+        </div>
+        <ng-template #noCategories>
+          <p>Aucune catégorie de routine disponible.</p>
+        </ng-template>
+      </div>
+    </section>
+  </div>
 </ion-content>
