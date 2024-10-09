@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/backend/user/auth.service';
 import { User } from 'src/backend/user/user.interface';
@@ -6,8 +6,10 @@ import { User } from 'src/backend/user/user.interface';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class AuthComponent {
   isLoginMode = true;
   username = ''
@@ -52,12 +54,24 @@ export class AuthComponent {
 
   onSubmit() {
     if (this.isLoginMode) {
+      if (!this.username || !this.password) {
+        console.error('Missing information');
+        return;
+      }
       this.authService.login(this.username, this.password).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
           this.fetchCurrentUser();
         },
-        error: (error) => console.error(error)
+        error: (error) => {
+          if (error.status === 401) {
+            console.error('Wrong password / username / email');
+          } else if (error.status === 404) {
+            console.error('User not found');
+          } else {
+            console.error('Problème réseau');
+          }
+        }
       });
     } else {
       this.authService.register(this.formData).subscribe({
@@ -67,15 +81,20 @@ export class AuthComponent {
             next: (response) => {
               localStorage.setItem('token', response.token);
               this.fetchCurrentUser();
-              this.router.navigate(['/question'])
+              this.router.navigate(['/question']);
             },
-            error: (error) => console.error(error)
+            error: (error) => {
+              console.error('Problème réseau');
+            }
           });
         },
-        error: (error) => console.error(error)
+        error: (error) => {
+          console.error('Problème réseau');
+        }
       });
     }
   }
+
 
   fetchCurrentUser() {
    /* this.authService.getCurrentUser().subscribe({

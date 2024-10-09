@@ -1,89 +1,129 @@
 <ion-content [fullscreen]="true" class="login-content">
-  <div id="container">
-    <!-- Ajouter un logo -->
+  <div class="auth-container">
+    <!-- Logo -->
     <div class="logo-container">
-      <img src="\assets\logo-rutix.png" alt="Logo" class="logo">
+      <img src="assets/logo-rutix.png" alt="Logo" class="logo">
     </div>
 
-    <!-- Titre dynamique en fonction du mode (connexion ou inscription) -->
+    <!-- Titre dynamique en fonction du mode -->
     <h2 *ngIf="isLoginMode" class="page-title">Connexion</h2>
     <h2 *ngIf="!isLoginMode && step === 1" class="page-title">Inscription - Étape 1</h2>
     <h2 *ngIf="!isLoginMode && step === 2" class="page-title">Inscription - Étape 2</h2>
     <h2 *ngIf="!isLoginMode && step === 3" class="page-title">Inscription - Étape 3</h2>
 
-    <form (ngSubmit)="onSubmit()">
-      <!-- Etape 1: Identifiants -->
-      <ion-list *ngIf="!isLoginMode && step === 1">
-        <ion-item>
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="formData.username" name="username" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input type="password" placeholder="Mot de passe" [(ngModel)]="formData.password" name="password" required></ion-input>
-        </ion-item>
-        <ion-button expand="block" color="primary" type="button" (click)="nextStep()">Suivant</ion-button>
-      </ion-list>
-
-      <!-- Etape 2: Informations personnelles -->
-      <ion-list *ngIf="!isLoginMode && step === 2">
-        <ion-item>
-          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Prénom" [(ngModel)]="formData.firstname" name="firstname" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Nom" [(ngModel)]="formData.lastname" name="lastname" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
-          <ion-input type="email" placeholder="Email" [(ngModel)]="formData.email" name="email" required></ion-input>
-        </ion-item>
-        <ion-button expand="block" color="primary" type="button" (click)="nextStep()">Suivant</ion-button>
-      </ion-list>
-
-      <!-- Etape 3: Coordonnées -->
-      <ion-list *ngIf="!isLoginMode && step === 3">
-        <ion-item>
-          <ion-icon name="call-outline" slot="start"></ion-icon>
-          <ion-input type="tel" placeholder="Numéro de téléphone" [(ngModel)]="formData.phonenumber" name="phonenumber" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="earth-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Pays" [(ngModel)]="formData.country" name="country" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="location-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Code postal" [(ngModel)]="formData.postalcode" name="postalcode" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="business-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Ville" [(ngModel)]="formData.city" name="city" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="home-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Adresse" [(ngModel)]="formData.adress" name="adress" required></ion-input>
-        </ion-item>
-        <ion-button expand="block" color="success" type="submit">S'inscrire</ion-button>
-      </ion-list>
-
+    <!-- Formulaire de connexion/inscription -->
+    <form (ngSubmit)="onSubmit()" class="form">
       <!-- Connexion -->
-      <ion-list *ngIf="isLoginMode">
-        <ion-item>
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="username" name="username" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input type="password" placeholder="Mot de passe" [(ngModel)]="password" name="password" required></ion-input>
-        </ion-item>
+      <div *ngIf="isLoginMode">
+        <ion-list>
+          <ion-item class="input-field">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Nom d'utilisateur"
+              [(ngModel)]="username"
+              name="username"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item class="input-field">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+            <ion-input
+              type="password"
+              placeholder="Mot de passe"
+              [(ngModel)]="password"
+              name="password"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-list>
         <ion-button expand="block" color="primary" type="submit">Se connecter</ion-button>
-      </ion-list>
+      </div>
+
+      <!-- Inscription -->
+      <div *ngIf="!isLoginMode">
+        <!-- Etape 1: Identifiants -->
+        <ion-list *ngIf="step === 1">
+          <ion-item class="input-field">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Nom d'utilisateur"
+              [(ngModel)]="formData.username"
+              name="username"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item class="input-field">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+            <ion-input
+              type="password"
+              placeholder="Mot de passe"
+              [(ngModel)]="formData.password"
+              name="password"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <!-- Etape 2: Informations personnelles -->
+        <ion-list *ngIf="step === 2">
+          <ion-item class="input-field">
+            <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Prénom"
+              [(ngModel)]="formData.firstname"
+              name="firstname"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item class="input-field">
+            <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Nom"
+              [(ngModel)]="formData.lastname"
+              name="lastname"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <!-- Etape 3: Coordonnées -->
+        <ion-list *ngIf="step === 3">
+          <ion-item class="input-field">
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-input
+              type="tel"
+              placeholder="Numéro de téléphone"
+              [(ngModel)]="formData.phonenumber"
+              name="phonenumber"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item class="input-field">
+            <ion-icon name="earth-outline" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Pays"
+              [(ngModel)]="formData.country"
+              name="country"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <!-- Bouton suivant/précédent et soumettre -->
+        <ion-button expand="block" color="primary" type="button" (click)="nextStep()" *ngIf="step < 3">Suivant</ion-button>
+        <ion-button expand="block" color="light" type="button" (click)="previousStep()" *ngIf="step > 1">Précédent</ion-button>
+        <ion-button expand="block" color="success" type="submit" *ngIf="step === 3">S'inscrire</ion-button>
+      </div>
     </form>
 
-    <!-- Bouton pour changer de mode (inscription/connexion) -->
+    <!-- Switch mode inscription/connexion -->
     <ion-button expand="block" fill="outline" (click)="onSwitchMode()">
-      {{ isLoginMode ? 'Vous n\'avez pas de compte ? Inscrivez-vous ici' : 'Annuler' }}
+      {{ isLoginMode ? 'Inscrivez-vous ici' : 'Annuler' }}
     </ion-button>
   </div>
 </ion-content>
