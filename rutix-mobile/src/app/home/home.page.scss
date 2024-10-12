@@ -99,4 +99,100 @@
     right: 3%;
     font-size: 1.8rem;
   }
+
+ 
+}
+
+.oc-style {
+  background-color: #333;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  display: flex;
+  width: 80%;
+  height: 80%;
+  background-color: #a0cf93;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Sidebar avec horloge et tâches */
+.sidebar {
+  flex: 0.3;
+  background-color: #a0cf93;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Horloge */
+.clock-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.clock {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  position: relative;
+}
+
+.hour-hand,
+.minute-hand,
+.second-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom;
+  transform: translateX(-50%);
+}
+
+.hour-hand {
+  width: 4px;
+  height: 30px;
+  background-color: #000;
+}
+
+.minute-hand {
+  width: 3px;
+  height: 45px;
+  background-color: #000;
+}
+
+.second-hand {
+  width: 2px;
+  height: 50px;
+  background-color: red;
+}
+
+/* Liste des tâches */
+.task-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  background-color: #d6e9ff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-name {
+  font-weight: bold;
+}
+
+.task-taskTime {
+  color: #666;
 }
