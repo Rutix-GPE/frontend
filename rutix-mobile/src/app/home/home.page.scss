@@ -22,13 +22,14 @@
   transition: width 0.3s; /* Ajoute une transition pour l'animation */
 }
 
-/* État réduit de la barre latérale */
+/* État réduit de la barre latérale 
 .sidebar.collapsed {
-  width: 60px; /* Largeur réduite lorsque la barre est cachée */
-}
+  width: 60px; /* Largeur réduite lorsque la barre est cachée 
+}*/
 
 /* Contenu principal */
 .container {
+  flex-grow: 1; /* Permet au contenu principal de s'étendre selon l'espace disponible */
   margin-left: 20%; /* Laisser de l'espace pour la barre latérale */
   padding: 1rem;
   display: flex; /* Pour permettre l'affichage du contenu principal en flex */
@@ -103,7 +104,7 @@
  
 }
 
-.oc-style {
+/*.oc-style {
   background-color: #333;
   height: 100%;
   display: flex;
@@ -118,19 +119,14 @@
   background-color: #a0cf93;
   border-radius: 10px;
   overflow: hidden;
-}
+}*/
 
-/* Sidebar avec horloge et tâches */
+/* Sidebar avec horloge et tâches*/ 
 .sidebar {
-  flex: 0.3;
   background-color: #a0cf93;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-/* Horloge */
+/* Horloge */ 
 .clock-container {
   display: flex;
   justify-content: center;
@@ -174,14 +170,14 @@
   background-color: red;
 }
 
-/* Liste des tâches */
+/* Liste des tâches*/
 .task-list ul {
   list-style: none;
   padding: 0;
 }
 
 .task-list li {
-  background-color: #d6e9ff;
+  background-color: #a5caf5;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -196,3 +192,42 @@
 .task-taskTime {
   color: #666;
 }
+
+/*Post-it*/ 
+
+.post-it-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.post-it {
+  width: 200px;
+  height: 200px;
+  background-color: #ffeb3b;
+  padding: 10px;
+  font-size: 1.2rem;
+  color: #333;
+  border: 2px solid #e0c800;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: text;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.post-it:focus {
+  outline: none;
+  border: 2px solid #c9b500;
+}
+
+ion-button {
+  margin-top: 10px;
+  --background: #4caf50;
+  --background-activated: #388e3c;
+}
+
+
+

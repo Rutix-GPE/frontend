@@ -6,7 +6,8 @@ import { User } from 'src/backend/user/user.interface';
 import { Question } from 'src/backend/question/question.interface';
 import { Response } from 'src/backend/response/response.interface'; 
 import { CategorieService, Category } from 'src/backend/categorie/categorie.service'; // Import CategoryService and Category interface
-import { TaskService, Tasks }from 'src/backend/tasks/task.service';
+import { TaskService }from 'src/backend/tasks/task.service';
+import { Tasks }from 'src/backend/tasks/task.interface';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +22,14 @@ export class HomePage implements OnInit {
   showCategories = false;
   showTasks = false;
   categories: Category[] = []; // Array to store categories
+  postItMemo: string = '';
 
-  tasks: Tasks[] = [ 
-    {name: "Tache 1", taskTime: '01:00'},
-    {name: "Tache 2", taskTime: '04:00'},
-    {name: "Tache 3", taskTime: '06:00'},
-  ]
-
-
+    tasks = [
+      { name: 'Tache 1', taskTime: '01:30' },
+      { name: 'Tache 2', taskTime: '04:00' },
+      { name: 'Tache 3', taskTime: '06:00' }
+    ];
+  
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
@@ -50,8 +51,12 @@ export class HomePage implements OnInit {
     });
 
     this.updateClock();
-  }
 
+    const savedMemo = localStorage.getItem('postItMemo');
+    if (savedMemo) {
+      this.postItMemo = savedMemo;
+    }
+  }
 
   fetchCategories(): void {
     this.categorieService.listAll().subscribe(
@@ -101,7 +106,7 @@ export class HomePage implements OnInit {
       }
     });
   }
-  
+
   updateClock() {
     const hourHand = document.querySelector('.hour-hand') as HTMLElement;
     const minuteHand = document.querySelector('.minute-hand') as HTMLElement;
@@ -123,6 +128,11 @@ export class HomePage implements OnInit {
     }
 
     setInterval(setClock, 1000);
+  }
+
+  saveMemo() {
+    localStorage.setItem('postItMemo', this.postItMemo); // Sauvegarde dans le localStorage
+    alert('Mémo sauvegardé !');
   }
 }
 
