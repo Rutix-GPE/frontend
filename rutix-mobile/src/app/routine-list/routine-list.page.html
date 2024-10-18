@@ -1,0 +1,10 @@
+ <ion-list>
+    <ion-item *ngFor="let routine of routines">
+      <ion-label>
+        <h2>{{ routine.name }}</h2>
+        <p>{{ routine.description }}</p>
+        <p><strong>Heure : </strong>{{ routine.taskTime | date: 'HH:mm' }}</p> <!-- Format 24h français -->
+        <p><strong>Jours : </strong>{{ getDayNames(routine.days) }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>

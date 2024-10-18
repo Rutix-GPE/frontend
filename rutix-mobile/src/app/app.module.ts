@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
@@ -19,12 +20,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { QuestionComponent } from './question/question.component';
 import { QuestionModule } from './question/question.module';
 
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
-  declarations: [	AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,AuthModule,CoreHttpModule,QuestionModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideHttpClient(withInterceptorsFromDi())],
+  declarations: [AppComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, AuthModule, CoreHttpModule, QuestionModule],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

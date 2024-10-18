@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth.guard';
 import { QuestionComponent } from './question/question.component';
+import { RoutineListComponent } from './routine-list/routine-list.component';
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -18,6 +19,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'routine',
+    loadChildren: () => import('./routine-list/routine-list.module').then( m => m.RoutineListPageModule),
+    canActivate: [AuthGuard]
   },
 ];
 

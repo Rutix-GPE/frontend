@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/backend/question/question.service';
-import { ResponseService } from 'src/backend/response/response.service'; 
+import { ResponseService } from 'src/backend/response/response.service';
 import { AuthService } from 'src/backend/user/auth.service';
 import { User } from 'src/backend/user/user.interface';
 import { Question } from 'src/backend/question/question.interface';
-import { Response } from 'src/backend/response/response.interface'; 
+import { Response } from 'src/backend/response/response.interface';
 import { CategorieService, Category } from 'src/backend/categorie/categorie.service'; // Import CategoryService and Category interface
 import { TaskService }from 'src/backend/tasks/task.service';
 import { Tasks }from 'src/backend/tasks/task.interface';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -16,32 +18,37 @@ import { Tasks }from 'src/backend/tasks/task.interface';
 })
 export class HomePage implements OnInit {
   questions: Question[] = [];
-  userResponseslist: { [questionId: number]: Response | null } = {}; 
-  currentUser: User | null = null;  
+  userResponseslist: { [questionId: number]: Response | null } = {};
+  currentUser: User | null = null;
   showResponses = false;
   showCategories = false;
   showTasks = false;
   categories: Category[] = []; // Array to store categories
   postItMemo: string = '';
-
+  colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
     tasks = [
       { name: 'Tache 1', taskTime: '01:30' },
       { name: 'Tache 2', taskTime: '04:00' },
-      { name: 'Tache 3', taskTime: '06:00' }
+      { name: 'Tache 3', taskTime: '01:30' },
+      { name: 'Tache 4', taskTime: '04:00' },
+      { name: 'Tache 5', taskTime: '01:30' },
+      { name: 'Tache 6', taskTime: '04:00' },
     ];
-  
+
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
     private authService: AuthService,
     private categorieService: CategorieService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router,
+    private menu: MenuController
   ) { }
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.fetchCategories(); // Fetch categories when the component is initialized
+      //this.fetchCategories(); // Fetch categories when the component is initialized
       this.loadQuestions();  // Load questions regardless of user existence
       if(this.currentUser!= null){
         this.loadUserResponsesForUser(this.currentUser?.id)
@@ -98,7 +105,7 @@ export class HomePage implements OnInit {
         // Populate userResponses by mapping the responses to their questionId
         responses.forEach(response => {
           this.userResponseslist[response.questionId] = response;
-          
+
         });
       },
       error: (error) => {
@@ -133,6 +140,16 @@ export class HomePage implements OnInit {
   saveMemo() {
     localStorage.setItem('postItMemo', this.postItMemo); // Sauvegarde dans le localStorage
     alert('Mémo sauvegardé !');
+  }
+
+  openMenu() {
+    this.menu.open('main-menu');
+  }
+
+  // Redirection vers la page des routines
+  goToRoutine() {
+    this.router.navigate(['/routine']);
+    this.menu.close(); // Fermer le menu après la redirection
   }
 }
 
