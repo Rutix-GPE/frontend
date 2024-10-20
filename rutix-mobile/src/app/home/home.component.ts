@@ -10,6 +10,7 @@ import { TaskService }from 'src/backend/tasks/task.service';
 import { Tasks }from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -25,16 +26,19 @@ export class HomePage implements OnInit {
   showTasks = false;
   categories: Category[] = []; // Array to store categories
   postItMemo: string = '';
+  newTaskName: string = '';
+  newTaskTime: string = '';
+  isAddingTask = false;
+  newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
-    tasks = [
-      { name: 'Tache 1', taskTime: '01:30' },
-      { name: 'Tache 2', taskTime: '04:00' },
-      { name: 'Tache 3', taskTime: '01:30' },
-      { name: 'Tache 4', taskTime: '04:00' },
-      { name: 'Tache 5', taskTime: '01:30' },
-      { name: 'Tache 6', taskTime: '04:00' },
-    ];
-
+  tasks = [
+    { name: 'Tache 1', taskTime: '01:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
+    { name: 'Tache 2', taskTime: '04:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
+    { name: 'Tache 3', taskTime: '01:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
+    { name: 'Tache 4', taskTime: '02:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
+    { name: 'Tache 5', taskTime: '05:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
+    { name: 'Tache 6', taskTime: '06:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() }
+  ];
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
@@ -42,8 +46,10 @@ export class HomePage implements OnInit {
     private categorieService: CategorieService,
     private taskService: TaskService,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private alertController: AlertController
   ) { }
+
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
@@ -58,12 +64,15 @@ export class HomePage implements OnInit {
     });
 
     this.updateClock();
-
+    this.loadTasks();
     const savedMemo = localStorage.getItem('postItMemo');
     if (savedMemo) {
       this.postItMemo = savedMemo;
     }
+
   }
+
+
 
   fetchCategories(): void {
     this.categorieService.listAll().subscribe(
@@ -114,6 +123,7 @@ export class HomePage implements OnInit {
     });
   }
 
+  
   updateClock() {
     const hourHand = document.querySelector('.hour-hand') as HTMLElement;
     const minuteHand = document.querySelector('.minute-hand') as HTMLElement;
@@ -135,6 +145,30 @@ export class HomePage implements OnInit {
     }
 
     setInterval(setClock, 1000);
+  }
+
+  addTaskCard() {
+    this.isAddingTask = true;
+  }
+  
+  saveTask() {
+    
+      this.tasks.push({ ...this.newTask });
+      this.newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
+      this.isAddingTask = false;
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+  }
+  
+  cancelTask() {
+    this.newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
+    this.isAddingTask = false;
+  }
+  
+  loadTasks() {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      this.tasks = JSON.parse(savedTasks);
+    }
   }
 
   saveMemo() {

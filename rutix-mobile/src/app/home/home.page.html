@@ -31,16 +31,37 @@
     <!-- Liste des tâches (petites cartes) -->
     <div class="task-list">
       <ion-list>
-        <ion-card *ngFor="let task of tasks; let i = index" class="task-card"  [color]="colors[i % colors.length]" >
+        <ion-card *ngFor="let task of tasks; let i = index" [color]="colors[i % colors.length]">
           <div class="task-item">
             <ion-label class="task-name">{{ task.name }}</ion-label>
             <ion-label class="task-time">{{ task.taskTime }}</ion-label>
-            <ion-icon class="task-icon" name="settings-sharp" slot="end" ></ion-icon>
+            <ion-icon class="task-icon" name="settings-sharp" slot="end"></ion-icon>
+          </div>
+        </ion-card>
+    
+        <!-- Carte d'ajout de tâche -->
+        <ion-card *ngIf="isAddingTask" [color]="colors[tasks.length % colors.length]">
+          <div class="task-item">
+            <ion-input [(ngModel)]="newTask.name" placeholder="Tâche"></ion-input>
+            <ion-input [(ngModel)]="newTask.taskTime" placeholder="Heure (hh:mm)" type="time"></ion-input>
+  
+            <ion-button (click)="saveTask()">
+              <ion-icon name="checkmark-circle-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+
+            <ion-button (click)="cancelTask()">
+            <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+          </ion-button>
           </div>
         </ion-card>
       </ion-list>
     </div>
-
+        <!-- Bouton pour ajouter une nouvelle tâche -->
+        <div class="add-task" style="display: flex; justify-content: center; margin-top: 20px;">
+          <ion-fab-button (click)="addTaskCard()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </div>
 
     <!-- Post-it mémo -->
     <div class="memo-container">

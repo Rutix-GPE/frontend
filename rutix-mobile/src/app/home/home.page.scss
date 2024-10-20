@@ -142,3 +142,35 @@ ion-button {
   --background: #4caf50;
   --background-activated: #388e3c;
 }
+
+.add-task{
+  
+  justify-content: center;
+  margin-top: 20px;
+}
+.ion-fab-button {
+  width: 40px;
+  height: 40px;
+  --background: #4CAF50; 
+  --border-radius: 50%;
+}
+.addT {
+  font-size: 20px;
+  color: white;
+}
+
+.add-task-card {
+  width: 80%;  
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 0.9rem; 
+}
+
+.add-task-card ion-button {
+  font-size: 0.8rem;  
+}
+
+.add-task-card ion-icon {
+  font-size: 1.2rem;  
+}
+
