@@ -13,36 +13,32 @@ import { CoreHttpClientPatch } from 'src/core/http/services/core-http-client-pat
   })
 
   export class TaskService {
-  private baseUrl = 'http://127.0.0.1:8000/api/tasks';
     constructor(
       private httpGet: CoreHttpClientGet,
       private httpPost: CoreHttpClientPost,
       //private httpPut: CoreHttpClientPut,
       private httpDelete: CoreHttpClientDelete,
       private httpPatch: CoreHttpClientPatch,
-      
-
     ){}
 
-    getTasks(): Observable<Tasks[]> {
-      return this.httpGet.list(`${this.baseUrl}/list`);
-    }
-
-    getTaskById(id: number): Observable<Tasks> {
-      return this.httpGet.one(`${this.baseUrl}/${id}`);
+    getTasksByUser(): Observable<Tasks[]> {
+      return this.httpGet.list(`task/get-by-user`);
     }
 
     addTask(task: Tasks): Observable<Tasks> {
-      return this.httpPost.post(`${this.baseUrl}`,task);
+      return this.httpPost.post(`task/create`,task);
     }
 
     updateTask(id:number, task: Partial<Tasks>): Observable<Tasks> {
-      return this.httpPatch.patch(`${this.baseUrl}/${id}`,task); 
+      return this.httpPatch.patch(`task/update/${id}`,task);
     }
 
-    deleteTask(id:number): Observable<void> {
-      return this.httpDelete.delete(`${this.baseUrl}/${id}`);
+    getTasksByUserAndTime(time: string): Observable<Tasks[]> {
+      return this.httpGet.list(`task/get-by-user-and-time/${time}`);
     }
 
-   
+    getTasksByUserForToday(): Observable<Tasks[]> {
+      const today = new Date().toISOString().split('T')[0]; // Obtenir la date du jour au format 'YYYY-MM-DD'
+      return this.httpGet.list(`task/get-by-user-and-time/${today}`);
+    }
 }

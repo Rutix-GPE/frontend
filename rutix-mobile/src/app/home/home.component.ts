@@ -6,8 +6,8 @@ import { User } from 'src/backend/user/user.interface';
 import { Question } from 'src/backend/question/question.interface';
 import { Response } from 'src/backend/response/response.interface';
 import { CategorieService, Category } from 'src/backend/categorie/categorie.service'; // Import CategoryService and Category interface
-import { TaskService }from 'src/backend/tasks/task.service';
-import { Tasks }from 'src/backend/tasks/task.interface';
+import { TaskService } from 'src/backend/tasks/task.service';
+import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -26,19 +26,19 @@ export class HomePage implements OnInit {
   showTasks = false;
   categories: Category[] = []; // Array to store categories
   postItMemo: string = '';
-  newTaskName: string = '';
-  newTaskTime: string = '';
   isAddingTask = false;
-  newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
+  newTask: Tasks = {
+    description: "",
+    id: 0,
+    taskDate: "",
+    user: "",
+    name: '',
+    taskTime: new  Date().toISOString(),
+    status: 'pending'
+  };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
-  tasks = [
-    { name: 'Tache 1', taskTime: '01:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
-    { name: 'Tache 2', taskTime: '04:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
-    { name: 'Tache 3', taskTime: '01:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
-    { name: 'Tache 4', taskTime: '02:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
-    { name: 'Tache 5', taskTime: '05:00', status: 'pending', creationDate: new Date(), updatedDate: new Date() },
-    { name: 'Tache 6', taskTime: '06:30', status: 'pending', creationDate: new Date(), updatedDate: new Date() }
-  ];
+  tasks: Tasks[] = [];
+
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
@@ -48,36 +48,29 @@ export class HomePage implements OnInit {
     private router: Router,
     private menu: MenuController,
     private alertController: AlertController
-  ) { }
-
+  ) {}
 
   ngOnInit(): void {
+    this.updateClock();
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      //this.fetchCategories(); // Fetch categories when the component is initialized
-      this.loadQuestions();  // Load questions regardless of user existence
-      if(this.currentUser!= null){
-        this.loadUserResponsesForUser(this.currentUser?.id)
-        console.log("je suis passé par la ")
-        console.log(this.userResponseslist)
+      this.loadQuestions();
+      if (this.currentUser != null) {
+        this.loadUserResponsesForUser(this.currentUser?.id);
       }
     });
 
-    this.updateClock();
-    this.loadTasks();
     const savedMemo = localStorage.getItem('postItMemo');
     if (savedMemo) {
       this.postItMemo = savedMemo;
     }
-
+    this.loadTasks();
   }
-
-
 
   fetchCategories(): void {
     this.categorieService.listAll().subscribe(
       (data: Category[]) => {
-        this.categories = data; // Bind the fetched categories to the categories array
+        this.categories = data;
       },
       (error) => {
         console.error('Error fetching categories', error);
@@ -90,31 +83,18 @@ export class HomePage implements OnInit {
       this.questions = questions;
     });
   }
-  toggleDisplay(show: 'responses' | 'categories'| 'tasks') {
-    if (show === 'responses') {
-      this.showResponses = true;
-      this.showCategories = false; // Cacher les catégories
-      this.showTasks = false;// Cacher les taches
-    } else if(show == 'categories') {
-      this.showCategories = true;
-      this.showResponses = false; // Cacher les réponses
-      this.showTasks = false;// Cacher les taches
-    } else if(show == 'tasks') {
-      this.showTasks = true;
-      this.showResponses = false;// Cacher les réponses
-      this.showCategories = false;// Cacher les catégories
-    }
+
+  toggleDisplay(show: 'responses' | 'categories' | 'tasks') {
+    this.showResponses = show === 'responses';
+    this.showCategories = show === 'categories';
+    this.showTasks = show === 'tasks';
   }
-  toggleCategories(): void {
-    this.showCategories = !this.showCategories;
-  }
+
   loadUserResponsesForUser(userId: number): void {
     this.responseService.getUserResponsesByUserId(userId).subscribe({
       next: (responses: Response[]) => {
-        // Populate userResponses by mapping the responses to their questionId
         responses.forEach(response => {
           this.userResponseslist[response.questionId] = response;
-
         });
       },
       error: (error) => {
@@ -123,7 +103,57 @@ export class HomePage implements OnInit {
     });
   }
 
-  
+  loadTasks(): void {
+    this.taskService.getTasksByUserForToday().subscribe(tasks => {
+      this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
+    });
+  }
+
+  toggleEditTask(task: Tasks): void {
+    task.isEditing = true;
+  }
+
+  saveTask(task: Tasks): void {
+    task.isEditing = false;
+    if (task.id){
+      this.taskService.updateTask(task.id, { name: task.name, taskTime: task.taskTime }).subscribe(() => {
+        this.loadTasks();
+      });
+    }
+  }
+
+  cancelEditTask(task: Tasks): void {
+    task.isEditing = false;
+    this.loadTasks();
+  }
+
+  addTaskCard() {
+    this.isAddingTask = true;
+  }
+
+  saveTaskCard(name: string, taskTime: string): void {
+    this.newTask = {
+      description: "",
+      taskDate: new Date().toISOString(),
+      user: this.currentUser ? this.currentUser.id.toString() : "", // Assigner l'utilisateur actuel
+      name: name,
+      taskTime: taskTime,
+      status: 'pending'
+    };
+
+    // Appel à addTask pour enregistrer la tâche via le service
+    this.taskService.addTask(this.newTask).subscribe({
+      next: (createdTask) => {
+        // Ajout de la nouvelle tâche à la liste et fermeture de l'édition
+        this.tasks.push({ ...createdTask, isEditing: false });
+        this.isAddingTask = false; // Fermer le formulaire après ajout
+      },
+      error: (error) => {
+        console.error('Erreur lors de la création de la tâche:', error);
+      }
+    });
+  }
+
   updateClock() {
     const hourHand = document.querySelector('.hour-hand') as HTMLElement;
     const minuteHand = document.querySelector('.minute-hand') as HTMLElement;
@@ -143,36 +173,24 @@ export class HomePage implements OnInit {
       minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
       hourHand.style.transform = `rotate(${hourDegrees}deg)`;
     }
-
     setInterval(setClock, 1000);
   }
 
-  addTaskCard() {
-    this.isAddingTask = true;
-  }
-  
-  saveTask() {
-    
-      this.tasks.push({ ...this.newTask });
-      this.newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
-      this.isAddingTask = false;
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
-  }
-  
+
   cancelTask() {
-    this.newTask = { name: '', taskTime: '', status: 'pending', creationDate: new Date(), updatedDate: new Date() };
+    this.newTask = {
+      description: "",
+      taskDate: "",
+      user: "",
+      name: '',
+      taskTime: new  Date().toISOString(),
+      status: 'pending'
+    };
     this.isAddingTask = false;
-  }
-  
-  loadTasks() {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      this.tasks = JSON.parse(savedTasks);
-    }
   }
 
   saveMemo() {
-    localStorage.setItem('postItMemo', this.postItMemo); // Sauvegarde dans le localStorage
+    localStorage.setItem('postItMemo', this.postItMemo);
     alert('Mémo sauvegardé !');
   }
 
@@ -180,11 +198,8 @@ export class HomePage implements OnInit {
     this.menu.open('main-menu');
   }
 
-  // Redirection vers la page des routines
   goToRoutine() {
     this.router.navigate(['/routine']);
-    this.menu.close(); // Fermer le menu après la redirection
+    this.menu.close();
   }
 }
-
-

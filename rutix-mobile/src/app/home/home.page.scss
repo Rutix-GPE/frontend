@@ -144,14 +144,14 @@ ion-button {
 }
 
 .add-task{
-  
+
   justify-content: center;
   margin-top: 20px;
 }
 .ion-fab-button {
   width: 40px;
   height: 40px;
-  --background: #4CAF50; 
+  --background: #4CAF50;
   --border-radius: 50%;
 }
 .addT {
@@ -160,17 +160,34 @@ ion-button {
 }
 
 .add-task-card {
-  width: 80%;  
+  width: 80%;
   margin: 10px auto;
   padding: 10px;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
 }
 
 .add-task-card ion-button {
-  font-size: 0.8rem;  
+  font-size: 0.8rem;
 }
 
 .add-task-card ion-icon {
-  font-size: 1.2rem;  
+  font-size: 1.2rem;
 }
+
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-item ion-icon {
+  font-size: 24px; /* Taille des icônes */
+  margin-left: 10px;
+}
+
+.time-input {
+  max-width: 80px; /* Limiter la largeur de l'input pour l'heure */
+}
+
 
