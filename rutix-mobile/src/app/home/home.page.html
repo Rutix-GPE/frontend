@@ -103,14 +103,19 @@
       </ion-fab-button>
     </div>
 
-    <!-- Post-it mémo -->
     <div class="memo-container">
       <div class="memo-header">
-        <h3>MEMO</h3>
+          <h3>MEMO</h3>
       </div>
-      <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..."></ion-textarea>
+      
+      <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..." [readonly]="!isEditingMemo"></ion-textarea>
+      
+      <ion-button fill="clear" class="edit-button" (click)="updateMemo()">
+          <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      
       <ion-button expand="block" (click)="saveMemo()">SAUVEGARDER</ion-button>
-    </div>
-
   </div>
+</div>
+
 </ion-content>

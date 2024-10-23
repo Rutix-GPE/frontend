@@ -10,7 +10,6 @@ import { TaskService } from 'src/backend/tasks/task.service';
 import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +25,7 @@ export class HomePage implements OnInit {
   showTasks = false;
   categories: Category[] = []; // Array to store categories
   postItMemo: string = '';
+  isEditingMemo = false;
   isAddingTask = false;
   newTask: Tasks = {
     description: "",
@@ -47,7 +47,6 @@ export class HomePage implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private menu: MenuController,
-    private alertController: AlertController
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +64,7 @@ export class HomePage implements OnInit {
       this.postItMemo = savedMemo;
     }
     this.loadTasks();
+    this.loadMemo();
   }
 
   fetchCategories(): void {
@@ -189,9 +189,21 @@ export class HomePage implements OnInit {
     this.isAddingTask = false;
   }
 
+  updateMemo() {
+    this.isEditingMemo = true;
+  }
+
   saveMemo() {
     localStorage.setItem('postItMemo', this.postItMemo);
-    alert('Mémo sauvegardé !');
+    this.isEditingMemo = false;
+
+  }
+
+  loadMemo() {
+    const savedMemo = localStorage.getItem('postItMemo');
+    if (savedMemo) {
+      this.postItMemo = savedMemo;
+    }
   }
 
   openMenu() {
