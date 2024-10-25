@@ -65,11 +65,6 @@
             </ng-container>
           </div>
         </ion-card>
-
-
-
-
-
         <ion-card *ngIf="isAddingTask" [color]="colors[tasks.length % colors.length]">
           <div class="task-item">
               <ion-input [(ngModel)]="newTask.name" placeholder="Tâche" required></ion-input>
@@ -93,7 +88,6 @@
           </div>
         </ion-card>
 
-
       </ion-list>
     </div>
         <!-- Bouton pour ajouter une nouvelle tâche -->
@@ -107,13 +101,13 @@
       <div class="memo-header">
           <h3>MEMO</h3>
       </div>
-      
+
       <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..." [readonly]="!isEditingMemo"></ion-textarea>
-      
+
       <ion-button fill="clear" class="edit-button" (click)="updateMemo()">
           <ion-icon name="create-outline"></ion-icon>
       </ion-button>
-      
+
       <ion-button expand="block" (click)="saveMemo()">SAUVEGARDER</ion-button>
   </div>
 </div>

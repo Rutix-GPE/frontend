@@ -152,6 +152,16 @@ export class HomePage implements OnInit {
         console.error('Erreur lors de la création de la tâche:', error);
       }
     });
+    
+    this.newTask = {
+      description: "",
+      id: 0,
+      taskDate: "",
+      user: "",
+      name: '',
+      taskTime: new  Date().toISOString(),
+      status: 'pending'
+    };
   }
 
   updateClock() {
