@@ -81,7 +81,6 @@ export class AuthComponent {
             next: (response) => {
               localStorage.setItem('token', response.token);
               this.fetchCurrentUser();
-              this.router.navigate(['/question']);
             },
             error: (error) => {
               console.error('Problème réseau');
@@ -95,17 +94,19 @@ export class AuthComponent {
     }
   }
 
-
   fetchCurrentUser() {
-   /* this.authService.getCurrentUser().subscribe({
+    this.authService.getCurrentUser().subscribe({
       next: (user) => {
         this.currentUser = user;
         this.authService.setCurrentUser(user);
         console.log('Current User:', this.currentUser);
-        this.router.navigate(['/home']);
+        if (this.isLoginMode) {
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['/question']);
+        }
       },
       error: (error) => console.error(error)
-    });*/
-    this.router.navigate(['/home']);
+    });
   }
 }
