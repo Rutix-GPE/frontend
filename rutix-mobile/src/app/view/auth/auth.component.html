@@ -2,15 +2,15 @@
   <div class="auth-container">
     <!-- Logo -->
     <div class="logo-container">
-      <img src="assets/logo-rutix.png" alt="Logo" class="logo">
+      <img src="../../../assets/logo-rutix.png" alt="Logo" class="logo">
     </div>
 
     <!-- Titre dynamique en fonction du mode -->
-    <h2 *ngIf="isLoginMode" class="page-title">Connexion</h2>
+    <h2 *ngIf="isLoginMode" class="page-title">Connexion</h2><!-- NE PAS ENLEVER SI LE HTTPS N'EST PAS REMIS-->
     <h2 *ngIf="!isLoginMode && step === 1" class="page-title">Inscription - Étape 1</h2>
     <h2 *ngIf="!isLoginMode && step === 2" class="page-title">Inscription - Étape 2</h2>
     <h2 *ngIf="!isLoginMode && step === 3" class="page-title">Inscription - Étape 3</h2>
-
+    <h4>{{error}}</h4>
     <!-- Formulaire de connexion/inscription -->
     <form (ngSubmit)="onSubmit()" class="form">
       <!-- Connexion -->

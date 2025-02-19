@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from 'src/backend/question/question.interface';
 import { QuestionService } from 'src/backend/question/question.service';
-import { AuthService } from "../../backend/user/auth.service";
+import { AuthService } from "../../../backend/user/auth.service";
 import { User } from 'src/backend/user/user.interface';
 import { Router } from '@angular/router';
 
@@ -57,7 +57,7 @@ export class QuestionComponent implements OnInit {
     return this.questions[this.currentQuestionIndex];
   }
 
-  
+
   nextQuestion(): void {
     if (this.validateCurrentResponse()) {  // Valider avant de passer à la question suivante
       if (this.currentQuestionIndex < this.questions.length - 1) {
@@ -91,14 +91,14 @@ export class QuestionComponent implements OnInit {
   saveResponse(): void {
     if (this.userId !== null) {
       const existingResponse = this.responses.find(r => r.questionId === this.currentQuestion.id);
-  
+
       let responseValue = this.currentResponse;
-      
+
       // Vérifier si c'est un tableau (cas des checkbox) et le convertir en chaîne JSON
       if (Array.isArray(responseValue)) {
         responseValue = JSON.stringify(responseValue);  // Convertir le tableau en chaîne JSON
       }
-  
+
       if (existingResponse) {
         existingResponse.response = responseValue;  // Sauvegarder la chaîne JSON si c'est une checkbox
         existingResponse.error = '';  // Enlever l'erreur si elle existe
@@ -145,7 +145,7 @@ export class QuestionComponent implements OnInit {
     if (!this.currentResponse) {
       return true;  // Désactiver le bouton si aucune réponse n'est fournie
     }
-  
+
     // Si c'est une question de type 'number', s'assurer que la réponse est un nombre valide
     if (this.currentQuestion.type === 'number') {
       const responseNumber = parseFloat(this.currentResponse);
@@ -153,7 +153,7 @@ export class QuestionComponent implements OnInit {
         return true;  // Désactiver le bouton si la réponse n'est pas un nombre valide ou est négative
       }
     }
-  
+
     // Pour tous les autres types, activer le bouton si une réponse est présente
     return false;
   }

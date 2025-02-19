@@ -23,6 +23,7 @@ export class CoreHttpClientPost {
 
 
   postLogin(url: string, data: any | null): Observable<any> {
+    console.log('')
     let headers = this.coreHttpHeaders.headers;
     return this.http.post<any>(environment.backend_url + url, data, {
       headers: headers,
