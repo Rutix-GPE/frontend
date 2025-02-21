@@ -17,21 +17,29 @@
     <ion-buttons class="menu-button" (click)="openMenu()">
       <ion-icon name="reorder-three" size="large"></ion-icon>
     </ion-buttons>
-    <div class="clock-container-with-menu">
-      <div class="clock-container">
-        <div class="clock">
-          <div class="hour-hand"></div>
-          <div class="minute-hand"></div>
-          <div class="second-hand"></div>
-        </div>
-      </div>
-    </div>
+
+    <ion-grid class="d-flex justify-content-center align-content-center flex-column">
+          <ion-text class="date-text">
+            {{ dateString }}
+          </ion-text>
+          <ion-text class="time-text">
+            {{ timeString }}
+          </ion-text>
+    </ion-grid>
+
+    <ion-row class="d-flex justify-content-around w-100">
+      <ion-card class="card-white weather m-0">
+        TEMPS DEGRES
+      </ion-card>
+      <ion-card class="card-white character m-0">
+        PERSO
+      </ion-card>
+    </ion-row>
 
 
     <!-- Liste des tâches (petites cartes) -->
-    <div class="task-list">
-      <ion-list>
-        <ion-card *ngFor="let task of tasks; let i = index" [color]="colors[i % colors.length]">
+    <ion-card class="task-list card-white">
+        <ion-card  *ngFor="let task of tasks; let i = index" [color]="colors[i % colors.length]">
           <div class="task-item">
             <!-- Mode d'affichage -->
             <ng-container *ngIf="!task.isEditing">
@@ -87,15 +95,14 @@
             </div>
           </div>
         </ion-card>
+      <!-- Bouton pour ajouter une nouvelle tâche -->
+      <div *ngIf="!isAddingTask" class="add-task" style="display: flex; justify-content: center; margin-top: 20px;">
+        <ion-fab-button (click)="addTaskCard()">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </div>
 
-      </ion-list>
-    </div>
-        <!-- Bouton pour ajouter une nouvelle tâche -->
-    <div *ngIf="!isAddingTask" class="add-task" style="display: flex; justify-content: center; margin-top: 20px;">
-      <ion-fab-button (click)="addTaskCard()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </div>
+    </ion-card>
 
     <div class="memo-container">
       <div class="memo-header">

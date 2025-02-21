@@ -38,7 +38,8 @@ export class HomePage implements OnInit {
   };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
   tasks: Tasks[] = [];
-
+  dateString: string = '';
+  timeString: string = '';
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
@@ -48,6 +49,7 @@ export class HomePage implements OnInit {
     private router: Router,
     private menu: MenuController,
   ) {}
+
 
   ngOnInit(): void {
     this.updateClock();
@@ -65,6 +67,20 @@ export class HomePage implements OnInit {
     }
     this.loadTasks();
     this.loadMemo();
+
+    const now = new Date();
+    let dateFormatted = now.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    });
+    dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+    const timeFormatted = now.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    this.dateString = dateFormatted;
+    this.timeString = timeFormatted;
   }
 
   fetchCategories(): void {
@@ -152,7 +168,7 @@ export class HomePage implements OnInit {
         console.error('Erreur lors de la création de la tâche:', error);
       }
     });
-    
+
     this.newTask = {
       description: "",
       id: 0,
