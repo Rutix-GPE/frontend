@@ -97,9 +97,9 @@
         </ion-card>
       <!-- Bouton pour ajouter une nouvelle tâche -->
       <div *ngIf="!isAddingTask" class="add-task" style="display: flex; justify-content: center; margin-top: 20px;">
-        <ion-fab-button (click)="addTaskCard()">
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
+        <ion-button class="add-task-button" (click)="addTaskCard()">
+          Ajouter une tache
+        </ion-button>
       </div>
 
     </ion-card>
