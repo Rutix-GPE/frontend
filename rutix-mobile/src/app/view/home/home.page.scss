@@ -28,30 +28,18 @@
   width: 100%; /* Prend toute la largeur disponible */
 }
 
-.task-card {
-  max-height: 30px; /* Limite la taille maximale */
-  margin: 10px auto; /* Centrer la carte et réduire l'espacement */
-  border-radius: 8px; /* Ajuste l'arrondi des coins */
-}
-
 .task-item-add {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding: 1vh 2vw;
 }
 
 .task-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding: 1vh 2vw;
 }
 
 .task-icon {
@@ -61,6 +49,17 @@
 .task-name {
   font-weight: bold;
   color: #000;
+}
+
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 5px auto;
+  padding: 5px;
+  font-size: 1.5rem;
+  transition: width 200ms ease-in-out;
 }
 
 .task-time {
@@ -139,6 +138,8 @@ ion-button {
 
 .add-task-button{
   --background: #DCECD0;
+  font-size: 1.5rem;
+  padding:0;
 }
 
 
@@ -148,10 +149,20 @@ ion-button {
 }
 
 .add-task-card {
-  width: 80%;
-  margin: 10px auto;
-  padding: 10px;
-  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  transition: width 200ms ease-in-out;
+  margin: 5px auto;
+  padding: 5px;
+  font-size: 1.5rem;
+}
+
+.add-task-card ion-input {
+  background-color: white;
+  border-radius: 5px;
+  margin: 2px;
 }
 
 .add-task-card ion-button {
