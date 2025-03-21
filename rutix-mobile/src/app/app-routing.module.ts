@@ -4,6 +4,7 @@ import { AuthComponent } from './view/auth/auth.component';
 import { AuthGuard } from './auth.guard';
 import { QuestionComponent } from './view/question/question.component';
 import { RoutineListComponent } from './view/routine-list/routine-list.component';
+import {LayoutComponent} from "./container/layout/layout.component";
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -11,20 +12,28 @@ const routes: Routes = [
     canActivate: [AuthGuard]
    },
   {
-    path: 'home',
-    loadChildren: () => import('./view/home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: LayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./view/home/home.module').then(m => m.HomePageModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'routine',
+        loadChildren: () => import('./view/routine-list/routine-list.module').then(m => m.RoutineListPageModule),
+        canActivate: [AuthGuard]
+      },
+    ]
   },
-  {
-    path: 'routine',
-    loadChildren: () => import('./view/routine-list/routine-list.module').then(m => m.RoutineListPageModule),
-    canActivate: [AuthGuard]
-  },
+
 ];
 
 @NgModule({
