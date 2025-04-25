@@ -94,7 +94,7 @@
           </div>
         </ion-card>
       <!-- Bouton pour ajouter une nouvelle tâche -->
-      <div *ngIf="!isAddingTask" class="add-task" style="display: flex; justify-content: center; margin-top: 20px;">
+      <div *ngIf="!isAddingTask" class="add-task">
         <ion-button class="add-task-button" (click)="addTaskCard()">
           Ajouter une tache
         </ion-button>
@@ -104,17 +104,12 @@
 
     <div class="memo-container">
       <div class="memo-header">
-          <h3>MEMO</h3>
+          <b>MEMO</b>
       </div>
 
-      <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..." [readonly]="!isEditingMemo"></ion-textarea>
+      <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..."></ion-textarea>
 
-      <ion-button fill="clear" class="edit-button" (click)="updateMemo()">
-          <ion-icon name="create-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button expand="block" (click)="saveMemo()">SAUVEGARDER</ion-button>
-  </div>
+    </div>
 </div>
 
 </ion-content>
