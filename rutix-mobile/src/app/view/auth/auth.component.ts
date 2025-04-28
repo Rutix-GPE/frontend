@@ -28,6 +28,7 @@ export class AuthComponent {
     adress: ''
   };
   currentUser: User | null = null;
+  error = 'DEBUG VERSION';
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.currentUser$.subscribe(user => this.currentUser = user);
@@ -56,6 +57,7 @@ export class AuthComponent {
     if (this.isLoginMode) {
       if (!this.username || !this.password) {
         console.error('Missing information');
+        this.error = 'Missing information'
         return;
       }
       this.authService.login(this.username, this.password).subscribe({
