@@ -7,15 +7,17 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './view/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { CoreHttpModule } from 'src/core/http/core-http.module';
+
 import { QuestionModule } from './view/question/question.module';
+
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
-  declarations: [AppComponent], // Retiré WelcomeComponent et IntroComponent
+  declarations: [AppComponent], 
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
