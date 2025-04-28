@@ -38,7 +38,8 @@ export class HomePage implements OnInit {
   };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
   tasks: Tasks[] = [];
-
+  dateString: string = '';
+  timeString: string = '';
   constructor(
     private questionService: QuestionService,
     private responseService: ResponseService,
@@ -49,8 +50,8 @@ export class HomePage implements OnInit {
     private menu: MenuController,
   ) {}
 
+
   ngOnInit(): void {
-    this.updateClock();
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.loadQuestions();
@@ -65,6 +66,20 @@ export class HomePage implements OnInit {
     }
     this.loadTasks();
     this.loadMemo();
+
+    const now = new Date();
+    let dateFormatted = now.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    });
+    dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+    const timeFormatted = now.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    this.dateString = dateFormatted;
+    this.timeString = timeFormatted;
   }
 
   fetchCategories(): void {
@@ -152,7 +167,7 @@ export class HomePage implements OnInit {
         console.error('Erreur lors de la création de la tâche:', error);
       }
     });
-    
+
     this.newTask = {
       description: "",
       id: 0,
@@ -164,27 +179,7 @@ export class HomePage implements OnInit {
     };
   }
 
-  updateClock() {
-    const hourHand = document.querySelector('.hour-hand') as HTMLElement;
-    const minuteHand = document.querySelector('.minute-hand') as HTMLElement;
-    const secondHand = document.querySelector('.second-hand') as HTMLElement;
 
-    function setClock() {
-      const now = new Date();
-      const seconds = now.getSeconds();
-      const minutes = now.getMinutes();
-      const hours = now.getHours();
-
-      const secondDegrees = ((seconds / 60) * 360) + 90;
-      const minuteDegrees = ((minutes / 60) * 360) + ((seconds / 60) * 6) + 90;
-      const hourDegrees = ((hours / 12) * 360) + ((minutes / 60) * 30) + 90;
-
-      secondHand.style.transform = `rotate(${secondDegrees}deg)`;
-      minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
-      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-    }
-    setInterval(setClock, 1000);
-  }
 
 
   cancelTask() {
