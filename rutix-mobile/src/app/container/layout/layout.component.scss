@@ -1,14 +1,43 @@
-ion-tabs {
-  background-color: transparent;
-}
 
-ion-tab-bar {
-  background-color: transparent;
+
+ion-tab-bar.custom-tab-bar {
+  --background: none;     /* désactive le background Ionic par défaut */
+  background: transparent;      /* barre blanche derrière les cercles */
+  height: 80px;           /* hauteur de la barre */
+  padding-top: 12px;      /* décale légèrement les cercles vers le haut */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   border: none;
 
 }
 
 ion-tab-button {
-  background-color: transparent;
+  --background: transparent;
+  --ripple-color: transparent;
+  padding: 0;
+  margin: 0;
 
+  .tab-icon-wrapper {
+    box-sizing: border-box;         /* border inclus dans width/height */
+    width: 56px;
+    height: 56px;
+    background: white;              /* fond blanc pour tous */
+    border: 4px solid transparent;  /* bordure invisible par défaut */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  ion-icon {
+    font-size: 28px;
+    color: black;
+  }
+
+  &.tab-selected .tab-icon-wrapper {
+    background: #d0d0d0;  /* fond gris pour l’actif */
+    border-color: white;  /* bordure blanche interne */
+  }
 }

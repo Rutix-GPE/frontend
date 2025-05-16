@@ -13,6 +13,7 @@
       </ion-list>
     </ion-content>
   </ion-menu>
+
   <div class="main-container" id="main-content">
     <ion-buttons class="menu-button" (click)="openMenu()">
       <ion-icon name="reorder-three" size="large"></ion-icon>
@@ -99,17 +100,15 @@
           Ajouter une tache
         </ion-button>
       </div>
-
     </ion-card>
 
     <div class="memo-container">
       <div class="memo-header">
           <b>MEMO</b>
       </div>
-
       <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..."></ion-textarea>
-
     </div>
+
 </div>
 
 </ion-content>
