@@ -4,13 +4,18 @@ import { AuthComponent } from './view/auth/auth.component';
 import { AuthGuard } from './auth.guard';
 import { QuestionComponent } from './view/question/question.component';
 import { RoutineListComponent } from './view/routine-list/routine-list.component';
-import {LayoutComponent} from "./container/layout/layout.component";
+import { LayoutComponent } from './container/layout/layout.component';
+import { Intro1Component } from './view/intro/intro1/intro1.component';
+import { Intro2Component } from './view/intro/intro2/intro2.component';
+import { Intro3Component } from './view/intro/intro3/intro3.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'intro1', pathMatch: 'full' },
+  { path: 'intro1', component: Intro1Component },
+  { path: 'intro2', component: Intro2Component },
+  { path: 'intro3', component: Intro3Component },
   { path: 'login', component: AuthComponent },
-  { path: 'question', component: QuestionComponent,
-    canActivate: [AuthGuard]
-   },
+  { path: 'question', component: QuestionComponent, canActivate: [AuthGuard] },
   {
     path: '',
     component: LayoutComponent,
@@ -22,24 +27,16 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
-      {
         path: 'routine',
         loadChildren: () => import('./view/routine-list/routine-list.module').then(m => m.RoutineListPageModule),
         canActivate: [AuthGuard]
       },
     ]
   },
-
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
