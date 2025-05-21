@@ -12,8 +12,4 @@ export class Intro2Component {
   goToNext() {
     this.router.navigate(['/intro3']);
   }
-
-  goToPrevious() {
-    this.router.navigate(['/intro1']);
-  }
 }

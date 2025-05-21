@@ -1,11 +1,12 @@
 <ion-content [fullscreen]="true" class="intro-content">
-  <div class="intro-container">
-    <div class="logo-container">
-      <img src="../../../../assets/logo-rutix.png" alt="Logo" class="logo">
-    </div>
-    <h2>Explorez davantage</h2>
-    <p>Notre plateforme vous offre la possibilite de créer des listes de taches adaptées à votre mode de vie. </p>
-    <ion-button expand="block" color="primary" (click)="goToNext()">Suivant</ion-button>
-    <ion-button expand="block" color="light" (click)="goToPrevious()">Précédent</ion-button>
+  <h2>RUTIX</h2>
+  <div class="text-container">
+    <p>Notre plateforme vous offre la possibilite de créer des listes de taches adaptées à votre mode de vie.</p>
   </div>
+  <div class="image-container">
+    <img src="../../../../assets/logo-rutix.png" alt="Logo Rutix" class="logo-image">
+  </div>
+  <ion-button expand="block" class="next-button" (click)="goToNext()">
+    <ion-icon src="../../../../assets/icon/right.svg"></ion-icon>
+  </ion-button>
 </ion-content>

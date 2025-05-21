@@ -9,7 +9,8 @@
   text-align: center;
 
   h2 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-top: 60px;
     font-size: 3rem; /* Titre plus grand comme dans l'image */
     font-weight: 400;
     font-family: 'Press Start 2P', cursive; /* Police pixelisée */
@@ -34,7 +35,7 @@
     margin-right: auto; /* Assure que le conteneur est centré */
 
     p {
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       margin: 5px 0;
       color: #030303;
       font-family: Arial, sans-serif;
@@ -62,20 +63,20 @@
     font-size: 1rem;
     padding: 8px; /* Padding réduit */
     border-radius: 8px;
-    background-color: #fff; /* Fond blanc */
+    background-color: #c1efae; /* Fond blanc */
     --background: #ffffff; /* Force le fond blanc pour Ionic */
-    color: #c1efae; /* Vert pour la flèche */
+    color: #000000; /* Vert pour la flèche */
     --border-radius: 8px;
     display: flex; /* Centrage de l'icône */
     justify-content: center;
     align-items: center;
-    max-width: 120px; /* Largeur réduite */
-    width: 100%; /* Responsive */
+    max-width: 100px; /* Largeur réduite */
+    width: 90%; /* Responsive */
     margin-left: auto; /* Centrage */
     margin-right: auto; /* Centrage */
 
     ion-icon {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
   }
 }
@@ -107,7 +108,8 @@
       font-size: 1.2rem;
 
       ion-icon {
-        font-size: 2rem;
+        width: 32px; /* Équivalent à 2rem */
+        height: 32px;
       }
     }
   }
