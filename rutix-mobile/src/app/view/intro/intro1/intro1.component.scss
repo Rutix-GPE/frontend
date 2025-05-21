@@ -1,56 +1,114 @@
-.intro-container {
-  width: 90%;
-  max-width: 400px;
-  margin: 10% auto;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #c1efae; /* Nouvelle couleur de fond */
+  --background: #c1efae; /* Force la couleur pour Ionic */
   text-align: center;
-  transition: all 0.3s ease-in-out;
 
-  .logo-container {
+  h2 {
     margin-bottom: 20px;
+    font-size: 3rem; /* Titre plus grand comme dans l'image */
+    font-weight: 400;
+    font-family: 'Press Start 2P', cursive; /* Police pixelisée */
+    color: #000;
+    line-height: 1;
+    text-transform: uppercase;
+  }
 
-    img {
-      width: 300px;
+  .text-container {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
+    padding: 10px 15px; /* Padding uniforme */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 200px; /* Largeur ajustée */
+    width: 100%; /* Responsive */
+    display: flex; /* Utilisation de Flexbox pour centrer le contenu */
+    flex-direction: column;
+    align-items: center; /* Centrage horizontal du contenu */
+    justify-content: center; /* Centrage vertical du contenu */
+    margin-left: auto; /* Assure que le conteneur est centré */
+    margin-right: auto; /* Assure que le conteneur est centré */
+
+    p {
+      font-size: 0.9rem;
+      margin: 5px 0;
+      color: #030303;
+      font-family: Arial, sans-serif;
+      width: 100%; /* Assure que le texte prend toute la largeur disponible */
+      text-align: center; /* Centrage explicite du texte */
+      line-height: 1.2; /* Ajuste l'espacement entre les lignes */
+      padding: 0; /* Supprime tout padding interne */
+    }
+  }
+
+  .image-container {
+    margin-bottom: 20px;
+    display: flex; /* Centrage précis de l'image */
+    justify-content: center;
+    align-items: center;
+
+    .logo-image {
+      width: 300px; /* Taille ajustée pour correspondre au logo précédent */
       height: auto;
     }
   }
 
-  h2 {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #333;
-  }
-
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #555;
-  }
-
-  ion-button {
-    margin-top: 15px;
+  .next-button {
+    margin-top: 20px;
     font-size: 1rem;
-    padding: 12px;
+    padding: 8px; /* Padding réduit */
     border-radius: 8px;
+    background-color: #fff; /* Fond blanc */
+    --background: #ffffff; /* Force le fond blanc pour Ionic */
+    color: #c1efae; /* Vert pour la flèche */
+    --border-radius: 8px;
+    display: flex; /* Centrage de l'icône */
+    justify-content: center;
+    align-items: center;
+    max-width: 120px; /* Largeur réduite */
+    width: 100%; /* Responsive */
+    margin-left: auto; /* Centrage */
+    margin-right: auto; /* Centrage */
+
+    ion-icon {
+      font-size: 1.5rem;
+    }
   }
 }
 
 @media (min-width: 768px) {
-  .intro-container {
-    max-width: 600px;
-    padding: 30px;
-  }
+  .intro-content {
+    h2 {
+      font-size: 4rem;
+    }
 
-  h2 {
-    font-size: 2rem;
-  }
+    .text-container {
+      max-width: 300px; /* Ajuste la largeur pour grands écrans */
+      padding: 15px 20px;
 
-  ion-button {
-    font-size: 1.1rem;
-    padding: 15px;
+      p {
+        font-size: 1.1rem;
+      }
+    }
+
+    .image-container {
+      .logo-image {
+        width: 400px;
+      }
+    }
+
+    .next-button {
+      max-width: 150px; /* Largeur réduite pour grands écrans */
+      padding: 10px;
+      font-size: 1.2rem;
+
+      ion-icon {
+        font-size: 2rem;
+      }
+    }
   }
 }
