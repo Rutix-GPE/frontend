@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RoutineListPage } from './routine-list.component';
+import { RoutineListComponent } from './routine-list.component';
 
 describe('RoutineListPage', () => {
-  let component: RoutineListPage;
-  let fixture: ComponentFixture<RoutineListPage>;
+  let component: RoutineListComponent;
+  let fixture: ComponentFixture<RoutineListComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoutineListPage);
+    fixture = TestBed.createComponent(RoutineListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

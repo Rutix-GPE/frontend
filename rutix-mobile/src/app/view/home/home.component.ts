@@ -178,10 +178,7 @@ export class HomePage implements OnInit {
       status: 'pending'
     };
   }
-
-
-
-
+  
   cancelTask() {
     this.newTask = {
       description: "",
