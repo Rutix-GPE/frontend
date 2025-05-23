@@ -31,6 +31,11 @@ const routes: Routes = [
         loadChildren: () => import('./view/routine-list/routine-list.module').then(m => m.RoutineListPageModule),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'taskList',
+        loadChildren: () => import('./view/task-list/task-list.module').then(m => m.TaskListPageModule),
+        canActivate: [AuthGuard]
+      },
     ]
   },
 ];
