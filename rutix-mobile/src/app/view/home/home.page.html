@@ -32,8 +32,13 @@
       <ion-card class="card-white weather m-0">
         TEMPS DEGRES
       </ion-card>
-      <ion-card class="card-white character m-0">
-        PERSO
+      <ion-card class="card-white character m-0 d-flex justify-content-center align-content-center">
+        <img
+          *ngIf="currentUser?.avatarFile"
+          [src]="baseApi+'avatar/get/'+currentUser?.avatarFile"
+          alt="Avatar"
+          class="avatar-img"
+        />
       </ion-card>
     </ion-row>
 

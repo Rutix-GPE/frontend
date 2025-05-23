@@ -31,6 +31,11 @@ const routes: Routes = [
         loadChildren: () => import('./view/routine-list/routine-list.module').then(m => m.RoutineListPageModule),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'parameter',
+        loadChildren: () => import('./view/parameter/parameter.module').then(m => m.ParameterModule),
+        canActivate: [AuthGuard]
+      },
     ]
   },
 ];

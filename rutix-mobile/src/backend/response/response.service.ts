@@ -15,7 +15,7 @@ export class ResponseService {
 
 
   // Récupérer toutes les réponses pour un utilisateur donné
-getUserResponsesByUserId(userId: number): Observable<Response[]> {
+    getUserResponsesByUserId(userId: number | undefined): Observable<Response[]> {
   return this.httpGet.list(`response/user/${userId}`);
 }
 

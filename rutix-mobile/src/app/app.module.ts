@@ -12,6 +12,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { QuestionModule } from './view/question/question.module';
 import { LayoutModule } from './container/layout/layout.module';
 import { IntroModule } from './view/intro/intro.module';
+import {ParameterModule} from "./view/parameter/parameter.module";
 
 registerLocaleData(localeFr, 'fr');
 
@@ -25,7 +26,8 @@ registerLocaleData(localeFr, 'fr');
     CoreHttpModule,
     QuestionModule,
     LayoutModule,
-    IntroModule
+    IntroModule,
+    ParameterModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
