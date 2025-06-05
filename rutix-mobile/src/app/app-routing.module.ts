@@ -36,6 +36,11 @@ const routes: Routes = [
         loadChildren: () => import('./view/parameter/parameter.module').then(m => m.ParameterModule),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'taskList',
+        loadChildren: () => import('./view/task-list/task-list.module').then(m => m.TaskListPageModule),
+        canActivate: [AuthGuard]
+      },
     ]
   },
 ];

@@ -1,0 +1,112 @@
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #e0f2e9;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.timeline-wrapper {
+  position: relative;
+  display: flex;
+  padding: 10px;
+  background: #f3fff3;
+  border-radius: 10px;
+  margin: 10px;
+  min-height: calc(60px * 16); /* allongé pour couvrir 8h -> 23h */
+}
+
+.hour-column {
+  position: absolute;
+  height: 100%;
+  width: 60px;
+  top: 0;
+  left: 0;
+}
+
+.hour-mark {
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.task-column {
+  position: relative;
+  flex: 1;
+  height: calc(100px * 16);
+}
+
+.task-card {
+  position: absolute;
+  width: 90%;
+  margin-left: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  color: #000;
+}
+
+.task-name {
+  flex: 1;
+}
+
+.task-time {
+  margin-left: 10px;
+}
+
+.edit-icon {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.add-task-button-wrapper {
+  position: fixed;
+  bottom: -5px;  
+  left: 50px;
+  transform: translateX(29%);
+  z-index: 20;
+}
+
+.add-task-form {
+  position: fixed;
+  bottom: 15px;
+  left: 20px;
+  right: 20px;
+  z-index: 25;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-task-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #e8f5e9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+.nav-icon {
+  font-size: 28px;
+}
