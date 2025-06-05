@@ -1,0 +1,92 @@
+<ion-content>
+
+<!-- En-tête date + heure -->
+<div class="header-bar">
+  <div class="left-date">{{ dateString }}</div>
+  <div class="right-time">{{ timeString }}</div>
+</div>
+
+<!-- Frise horaire avec tâches positionnées -->
+<div class="timeline-wrapper">
+
+  <!-- Colonne des heures -->
+  <div class="hour-column">
+    <div class="hour-mark" *ngFor="let hour of hours; let i = index" [style.top]="(i * 100) + 'px'">{{ hour }}</div>
+  </div>
+
+  <!-- Colonne des tâches -->
+  <div class="task-column">
+
+    <!-- Formulaire d'ajout de nouvelle tâche -->
+<div *ngIf="isAddingTask" class="task-card add-task-form">
+  <ion-input [(ngModel)]="newTask.name" placeholder="Tâche" required></ion-input>
+
+  <ion-datetime-button datetime="task-time-picker"></ion-datetime-button>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="task-time-picker"
+        presentation="time"
+        [(ngModel)]="newTask.taskTime"
+        cancel-text="Annuler"
+        done-text="OK">
+      </ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <div class="add-task-actions">
+    <ion-icon name="checkmark-circle-outline" (click)="saveTaskCard(newTask.name, newTask.taskTime)"></ion-icon>
+    <ion-icon name="close-circle-outline" (click)="cancelTask()"></ion-icon>
+  </div>
+</div>
+
+    <!-- Boucle sur toutes les tâches -->
+    <ng-container *ngFor="let task of tasks; let i = index">
+
+      <!-- Mode édition -->
+      <div *ngIf="task.isEditing"
+           class="task-card editing"
+           [ngStyle]="{ top: calculateTop(task.taskTime) }"
+           [ngClass]="colors[i % colors.length]">
+
+        <ion-input [(ngModel)]="task.name" placeholder="Nom de la tâche"></ion-input>
+
+        <ion-datetime-button datetime="edit-time-{{i}}"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="edit-time-{{i}}"
+              [(ngModel)]="task.taskTime"
+              presentation="time"
+              display-format="HH:mm">
+            </ion-datetime>
+          </ng-template>
+        </ion-modal>
+
+        <ion-icon name="checkmark-circle-outline" (click)="saveTask(task)"></ion-icon>
+        <ion-icon name="close-circle-outline" (click)="cancelEditTask(task)"></ion-icon>
+      </div>
+
+      <!-- Mode affichage normal -->
+      <div *ngIf="!task.isEditing"
+           class="task-card"
+           [ngStyle]="{ top: calculateTop(task.taskTime) }"
+           [ngClass]="colors[i % colors.length]">
+
+        <div class="task-name">{{ task.name }}</div>
+        <div class="task-time">{{ task.taskTime | date:'HH:mm' }}</div>
+        <ion-icon class="edit-icon" name="pencil-outline" (click)="toggleEditTask(task)"></ion-icon>
+      </div>
+
+    </ng-container>
+
+  </div>
+</div>
+
+<!-- Bouton Ajouter une tâche -->
+<div *ngIf="!isAddingTask" class="add-task-button-wrapper">
+  <ion-button expand="block" color="success" (click)="addTaskCard()">
+    Ajouter une tâche
+  </ion-button>
+</div>
+</ion-content>
