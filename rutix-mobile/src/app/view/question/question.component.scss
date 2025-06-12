@@ -1,49 +1,129 @@
 /* Complete SCSS */
 :host {
-    ion-card-content {
-      padding: 20px;
+    .question-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
   
-      ion-item {
-        margin-bottom: 20px;  /* Space between form elements */
+    .question-card {
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+      background: var(--ion-color-light);
+    }
   
-        ion-label {
-          font-family: 'Poppins', sans-serif;
-          color: #333;
-          margin-bottom: 10px;  /* Space between label and input */
-        }
+    .question-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
   
-        ion-input,
-        ion-datetime {
-          border: 2px solid #FF7043;
-          border-radius: 8px;
-          padding: 8px;
-          background-color: #f2f2f2;
-          font-family: 'Poppins', sans-serif;
-          margin-top: 10px;  /* Space above input */
-          
-          /* Placeholder styling */
-          ::placeholder {
-            color: #999;  /* Light grey color for placeholder */
-          }
-        }
+    .answer-list {
+      background: transparent;
+      padding: 8px 0;
+    }
   
-        ion-checkbox,
-        ion-radio {
-          --background: #FF7043;
+    .answer-item {
+      --background: transparent;
+      --border-radius: 12px;
+      margin: 8px 0;
+      padding: 12px 16px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+  
+      &:hover {
+        --background: rgba(var(--ion-color-primary-rgb), 0.05);
+      }
+  
+      &:active {
+        --background: rgba(var(--ion-color-primary-rgb), 0.1);
+        transform: scale(0.98);
+      }
+  
+      &.item-radio-checked {
+        --background: rgba(var(--ion-color-primary-rgb), 0.1);
+        
+        .answer-label {
+          color: var(--ion-color-primary);
+          font-weight: 500;
         }
       }
     }
   
-    ion-footer {
-      ion-toolbar {
-        background-color: #4CAF50;
+    .answer-label {
+      font-size: 1.1rem;
+      color: var(--ion-color-medium);
+      margin-left: 12px;
+      transition: color 0.2s ease;
+    }
   
-        ion-button {
-          --background: #FF7043;
-          font-family: 'Poppins', sans-serif;
-          border-radius: 20px;
-        }
+    .custom-radio {
+      --color: var(--ion-color-primary);
+      --color-checked: var(--ion-color-primary);
+      --border-color: var(--ion-color-medium);
+      --border-color-checked: var(--ion-color-primary);
+      --border-width: 2px;
+      --border-radius: 50%;
+      --inner-border-radius: 50%;
+      width: 24px;
+      height: 24px;
+    }
+  
+    .error-message {
+      color: var(--ion-color-danger);
+      font-size: 0.9rem;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: rgba(var(--ion-color-danger-rgb), 0.1);
+      border-radius: 8px;
+    }
+  
+    .navigation-buttons {
+      padding: 16px 0;
+    }
+  
+    .next-button {
+      --background: var(--ion-color-primary);
+      --background-hover: var(--ion-color-primary-shade);
+      --background-activated: var(--ion-color-primary-shade);
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+      font-weight: 600;
+      height: 48px;
+      margin: 0;
+  
+      &:hover {
+        --box-shadow: 0 6px 16px rgba(var(--ion-color-primary-rgb), 0.4);
       }
+  
+      &[disabled] {
+        --background: var(--ion-color-medium);
+        --box-shadow: none;
+      }
+  
+      ion-icon {
+        margin-left: 8px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  // Animation pour les transitions
+  .question-card {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   

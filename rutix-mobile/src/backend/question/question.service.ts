@@ -24,4 +24,13 @@ export class QuestionService {
   newResponses(questionId: number, responseData: any): Observable<any> {
     return this.httpPost.post(`user-response/new/${questionId}`, responseData);
   }
+
+  getFirstQuestion(): Observable<any> {
+    return this.httpGet.one('user-response/v2/first-question');
+  }
+
+  getNextQuestion(url: string, answer: string): Observable<any> {
+    const questionId = url.split('/').pop();
+    return this.httpPost.post(`user-response/v2/next-question/${questionId}`, { answer });
+  }
 }
