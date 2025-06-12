@@ -1,0 +1,28 @@
+/* parameter.component.scss */
+
+.avatar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* étend la largeur pour que les boutons soient collés aux bords */
+  width: 100%;
+
+  ion-button {
+    /* optionnel : réduit le padding des boutons pour qu’ils restent au bord */
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}
+
+.avatar-img {
+  /* taille fixe */
+  width: 150px;
+  height: 150px;
+
+  object-fit: cover;    /* recadre si besoin */
+  border-radius: 8px;   /* coins arrondis (mettre 50% pour un cercle) */
+
+  /* centre visuellement si space-between crée un petit décalage */
+  margin: 0 1rem;
+  display: block;
+}

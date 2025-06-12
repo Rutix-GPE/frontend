@@ -138,7 +138,7 @@ ion-button {
 
 .add-task-button{
   --background: #DCECD0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding:0;
 }
 
@@ -214,4 +214,17 @@ ion-button {
 .character {
   width: 90px;
   height: 120px;
+}
+
+.avatar-img {
+  /* taille fixe */
+  width: 150px;
+  height: 150px;
+
+  object-fit: cover;    /* recadre si besoin */
+  border-radius: 8px;   /* coins arrondis (mettre 50% pour un cercle) */
+
+  /* centre visuellement si space-between crée un petit décalage */
+  margin: 0 1rem;
+  display: block;
 }

@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
     IonicModule,
     FormsModule,
     BrowserModule
-
   ]
 })
 export class AuthModule { }

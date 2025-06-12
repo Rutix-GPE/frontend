@@ -10,6 +10,7 @@ import { TaskService } from 'src/backend/tasks/task.service';
 import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
   questions: Question[] = [];
+  protected baseApi = environment.backend_url;
   userResponseslist: { [questionId: number]: Response | null } = {};
   currentUser: User | null = null;
   showResponses = false;
@@ -80,6 +82,7 @@ export class HomePage implements OnInit {
     });
     this.dateString = dateFormatted;
     this.timeString = timeFormatted;
+    console.log(this.currentUser);
   }
 
   fetchCategories(): void {

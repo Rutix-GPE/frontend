@@ -10,13 +10,25 @@ import { AuthModule } from './view/auth/auth.module';
 import { CoreHttpModule } from 'src/core/http/core-http.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { QuestionModule } from './view/question/question.module';
-import {LayoutModule} from "./container/layout/layout.module";
+import { LayoutModule } from './container/layout/layout.module';
+import { IntroModule } from './view/intro/intro.module';
+import {ParameterModule} from "./view/parameter/parameter.module";
 
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, AuthModule, CoreHttpModule, QuestionModule, LayoutModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    AuthModule,
+    CoreHttpModule,
+    QuestionModule,
+    LayoutModule,
+    IntroModule,
+    ParameterModule
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'fr-FR' },

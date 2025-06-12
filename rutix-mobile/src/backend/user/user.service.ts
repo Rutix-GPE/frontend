@@ -33,4 +33,8 @@ export class UserService {
   delete(id: number): Observable<void> {
     return this.httpDelete.delete(`user/${id}`);
   }
+
+  updateMemo(memo: string): Observable<any> {
+    return this.httpPatch.patch(`user/update-memo`, {memo: memo});
+  }
 }
