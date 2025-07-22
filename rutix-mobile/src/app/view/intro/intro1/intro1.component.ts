@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {NotificationService} from "../../../../core/notification/notification.service";
 
 @Component({
   selector: 'app-intro1',
@@ -12,4 +13,5 @@ export class Intro1Component {
   goToNext() {
     this.router.navigate(['/intro2']);
   }
+
 }

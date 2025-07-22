@@ -26,11 +26,12 @@ import { CoreHttpClientPatch } from 'src/core/http/services/core-http-client-pat
     }
 
     addTask(task: Tasks): Observable<Tasks> {
-      return this.httpPost.post(`task/create`,task);
+      task.description = "vide";
+      return this.httpPost.post(`user-task/v2/create`,task);
     }
 
     updateTask(id:number, task: Partial<Tasks>): Observable<Tasks> {
-      return this.httpPatch.patch(`task/update/${id}`,task);
+      return this.httpPatch.patch(`user-task/update/v2/${id}`,task);
     }
 
     getTasksByUserAndTime(time: string): Observable<Tasks[]> {
@@ -39,6 +40,6 @@ import { CoreHttpClientPatch } from 'src/core/http/services/core-http-client-pat
 
     getTasksByUserForToday(): Observable<Tasks[]> {
       const today = new Date().toISOString().split('T')[0]; // Obtenir la date du jour au format 'YYYY-MM-DD'
-      return this.httpGet.list(`task/get-by-user-and-time/${today}`);
+      return this.httpGet.list(`user-task/v2/get-by-user-and-date/${today}`);
     }
 }

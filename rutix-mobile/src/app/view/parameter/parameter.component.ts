@@ -1,15 +1,12 @@
-// avatar-selector.component.ts
+// parameter.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AvatarService } from '../../../backend/avatar/avatar.service';
 import { AuthService } from '../../../backend/user/auth.service';
 import { User } from '../../../backend/user/user.interface';
-import {environment} from "../../../environments/environment";
-
-interface AvatarItem {
-  filename: string;
-  url: string;
-}
+import { environment } from '../../../environments/environment';
+import {UserService} from "../../../backend/user/user.service";
+import {NotificationService} from "../../../core/notification/notification.service";
 
 @Component({
   selector: 'app-parameter',
@@ -27,8 +24,9 @@ export class ParameterComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private avatarService: AvatarService,
+    private userService: UserService,
+    private notificationService: NotificationService
   ) {}
-
 
   ngOnInit(): void {
     this.loading = true;
@@ -39,27 +37,33 @@ export class ParameterComponent implements OnInit, OnDestroy {
         return;
       }
 
+      // plus d'initialisation notificationsEnabled ici
+
       this.avatarService.list().subscribe({
         next: (urls: string[]) => {
           this.avatars = urls;
-          // retrouver l’index sur le nom de fichier
           const idx = this.avatars.findIndex(url =>
             url.endsWith(user.avatarFile)
           );
           this.currentIndex = idx >= 0 ? idx : 0;
         },
-        error: err => {
-          console.error('Erreur chargement avatars', err);
-        },
-        complete: () => {
-          this.loading = false;
-        },
+        error: err => console.error('Erreur chargement avatars', err),
+        complete: () => (this.loading = false),
       });
     });
   }
 
   ngOnDestroy(): void {
     this.userSub?.unsubscribe();
+  }
+
+  async testNotification() {
+    try {
+      await this.notificationService.sendTestNotification();
+      console.log('Notification de test planifiée');
+    } catch (err) {
+      console.error('Échec notification de test', err);
+    }
   }
 
   get currentAvatarUrl(): string {
@@ -79,19 +83,34 @@ export class ParameterComponent implements OnInit, OnDestroy {
 
   save() {
     const filename = this.avatars[this.currentIndex];
-    if (!filename) { return; }
+    if (!filename) return;
     this.avatarService.updateAvatar(filename).subscribe({
-      next: () =>
-        this.authService.loadCurrentUser(),
-
-
-      error: err =>
-        console.error('Erreur mise à jour avatar', err),
+      next: () => this.authService.loadCurrentUser(),
+      error: err => console.error('Erreur mise à jour avatar', err),
     });
   }
 
-  /*
-  // notifications (à décommenter plus tard)
-  onNotificationsToggle(event: CustomEvent) { … }
-  */
+  // getters/setters délégués au UserService
+  get notificationsActive(): boolean {
+    return this.userService.notificationsActive;
+  }
+  set notificationsActive(value: boolean) {
+    this.userService.notificationsActive = value;
+  }
+
+  get presentationMode(): boolean {
+    return this.userService.presentationMode;
+  }
+  set presentationMode(value: boolean) {
+    this.userService.presentationMode = value;
+  }
+
+  // handlers pour les toggles
+  onNotificationsToggle(event: CustomEvent) {
+    this.notificationsActive = event.detail.checked;
+  }
+
+  onPresentationToggle(event: CustomEvent) {
+    this.presentationMode = event.detail.checked;
+  }
 }

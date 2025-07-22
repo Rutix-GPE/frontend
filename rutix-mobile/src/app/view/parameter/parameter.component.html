@@ -11,7 +11,7 @@
 
     <img
       *ngIf="currentAvatarUrl"
-      [src]="baseApi+'avatar/get/'+currentAvatarUrl"
+      [src]="baseApi + 'avatar/get/' + currentAvatarUrl"
       alt="Avatar"
       class="avatar-img"
     />
@@ -25,17 +25,31 @@
     Enregistrer l’avatar
   </ion-button>
 
-
+  <!-- Toggle Notifications -->
   <ion-item lines="full">
     <ion-label>Notifications</ion-label>
-    <!--<ion-toggle
-      slot="end"
-      [checked]="currentUser?.notificationsEnabled"
-      (ionChange)="onNotificationsToggle($event)"
-    ></ion-toggle>-->
     <ion-toggle
       slot="end"
+      [checked]="notificationsActive"
+      (ionChange)="onNotificationsToggle($event)"
     ></ion-toggle>
+  </ion-item>
+
+  <!-- Toggle Mode Présentation -->
+  <ion-item lines="full">
+    <ion-label>Mode Présentation</ion-label>
+    <ion-toggle
+      slot="end"
+      [checked]="presentationMode"
+      (ionChange)="onPresentationToggle($event)"
+    ></ion-toggle>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-label>Test Notification</ion-label>
+    <ion-button slot="end" (click)="testNotification()">
+      Lancer le test
+    </ion-button>
   </ion-item>
 
 </ion-card>

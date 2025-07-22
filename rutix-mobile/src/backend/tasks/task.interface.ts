@@ -2,8 +2,7 @@ export interface Tasks {
   id?: number;
   name: string;
   description: string;
-  taskDate: string;
-  taskTime: string;
+  taskDateTime: string;
   status: string;
   creationDate?: string;
   updatedDate?: string;

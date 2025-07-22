@@ -32,10 +32,9 @@ export class HomePage implements OnInit {
   newTask: Tasks = {
     description: "",
     id: 0,
-    taskDate: "",
+    taskDateTime: new  Date().toISOString(),
     user: "",
     name: '',
-    taskTime: new  Date().toISOString(),
     status: 'pending'
   };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
@@ -56,9 +55,9 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.loadQuestions();
+      //this.loadQuestions();
       if (this.currentUser != null) {
-        this.loadUserResponsesForUser(this.currentUser?.id);
+       // this.loadUserResponsesForUser(this.currentUser?.id);
       }
     });
 
@@ -68,22 +67,34 @@ export class HomePage implements OnInit {
     }
     this.loadTasks();
     this.loadMemo();
+    this.updateDateTime()
+    setInterval(() => {
+      this.updateDateTime()
+    },1000)
+  }
 
+
+
+  private updateDateTime(): void {
     const now = new Date();
+
     let dateFormatted = now.toLocaleDateString('fr-FR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long'
     });
     dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+
     const timeFormatted = now.toLocaleTimeString('fr-FR', {
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      //second: '2-digit'
     });
+
     this.dateString = dateFormatted;
     this.timeString = timeFormatted;
-    console.log(this.currentUser);
   }
+
 
   fetchCategories(): void {
     this.categorieService.listAll().subscribe(
@@ -134,7 +145,7 @@ export class HomePage implements OnInit {
   saveTask(task: Tasks): void {
     task.isEditing = false;
     if (task.id){
-      this.taskService.updateTask(task.id, { name: task.name, taskTime: task.taskTime }).subscribe(() => {
+      this.taskService.updateTask(task.id, { name: task.name, taskDateTime: task.taskDateTime }).subscribe(() => {
         this.loadTasks();
       });
     }
@@ -152,10 +163,9 @@ export class HomePage implements OnInit {
   saveTaskCard(name: string, taskTime: string): void {
     this.newTask = {
       description: "",
-      taskDate: new Date().toISOString(),
       user: this.currentUser ? this.currentUser.id.toString() : "", // Assigner l'utilisateur actuel
       name: name,
-      taskTime: taskTime,
+      taskDateTime: taskTime,
       status: 'pending'
     };
 
@@ -174,24 +184,19 @@ export class HomePage implements OnInit {
     this.newTask = {
       description: "",
       id: 0,
-      taskDate: "",
+      taskDateTime: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
       status: 'pending'
     };
   }
 
-
-
-
   cancelTask() {
     this.newTask = {
       description: "",
-      taskDate: "",
+      taskDateTime: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
       status: 'pending'
     };
     this.isAddingTask = false;

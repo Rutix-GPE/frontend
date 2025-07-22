@@ -20,17 +20,20 @@
     </ion-buttons>
 
     <ion-grid class="d-flex justify-content-center align-content-center flex-column">
-          <ion-text class="date-text">
-            {{ dateString }}
-          </ion-text>
-          <ion-text class="time-text">
-            {{ timeString }}
-          </ion-text>
+      <ion-text class="date-text">
+        {{ dateString }}
+      </ion-text>
+      <ion-text class="time-text">
+        {{ timeString }}
+      </ion-text>
     </ion-grid>
 
     <ion-row class="d-flex justify-content-around w-100">
       <ion-card class="card-white weather m-0">
-        TEMPS DEGRES
+        <div class="title-weather">Temperature</div>
+        <div class="temp-weather">
+          26°
+        </div>
       </ion-card>
       <ion-card class="card-white character m-0 d-flex justify-content-center align-content-center">
         <img
@@ -45,60 +48,59 @@
     <!-- Liste des tâches (petites cartes) -->
     <ion-card class="task-list card-white">
       <ng-container  *ngFor="let task of tasks; let i = index" >
-            <!-- Mode d'affichage -->
-            <div class="task-item">
-              <ng-container *ngIf="!task.isEditing">
-                <ion-card class="task-card" [color]="colors[i % colors.length]" >
-                  <ion-label class="task-name">{{ task.name }}</ion-label>
-                  <ion-icon class="task-icon" name="pencil-outline" size="large" (click)="toggleEditTask(task)"></ion-icon>
-                </ion-card>
-                <ion-label class="task-time">{{ task.taskTime | date:'shortTime' }}</ion-label>
-              </ng-container>
-              <!-- Mode d'édition -->
-              <ng-container  *ngIf="task.isEditing">
-                <ion-card class="add-task-card" [color]="colors[i % colors.length]">
-                  <ion-input [(ngModel)]="task.name" placeholder="Nom de la tâche"></ion-input>
-                  <ion-datetime-button datetime="datetime-{{i}}" class="time-picker-button"></ion-datetime-button>
-                  <ion-modal [keepContentsMounted]="true">
-                    <ng-template>
-                      <ion-datetime
-                        id="datetime-{{i}}"
-                        [(ngModel)]="task.taskTime"
-                        presentation="time"
-                        display-format="HH:mm"
-                      ></ion-datetime>
-                    </ng-template>
-                  </ion-modal>
-                  <ion-icon name="checkmark-circle-outline" size="large" (click)="saveTask(task)"></ion-icon>
-                  <ion-icon name="close-circle-outline" size="large" (click)="cancelEditTask(task)"></ion-icon>
-                </ion-card>
-              </ng-container>
-            </div>
-      </ng-container>
-
-
-        <ion-card *ngIf="isAddingTask" [color]="colors[tasks.length % colors.length]">
-          <div class="task-item">
-              <ion-input [(ngModel)]="newTask.name" placeholder="Tâche" required></ion-input>
-              <ion-datetime-button datetime="task-time-picker"></ion-datetime-button>
+        <!-- Mode d'affichage -->
+        <div class="task-item">
+          <ng-container *ngIf="!task.isEditing">
+            <ion-card class="task-card" [color]="colors[i % colors.length]" >
+              <ion-label class="task-name">{{ task.name }}</ion-label>
+              <ion-icon class="task-icon" name="pencil-outline" size="large" (click)="toggleEditTask(task)"></ion-icon>
+            </ion-card>
+            <ion-label class="task-time">{{ task.taskDateTime | date:'shortTime' }}</ion-label>
+          </ng-container>
+          <!-- Mode d'édition -->
+          <ng-container  *ngIf="task.isEditing">
+            <ion-card class="add-task-card" [color]="colors[i % colors.length]">
+              <ion-input [(ngModel)]="task.name" placeholder="Nom de la tâche"></ion-input>
+              <ion-datetime-button datetime="datetime-{{i}}" class="time-picker-button"></ion-datetime-button>
               <ion-modal [keepContentsMounted]="true">
                 <ng-template>
                   <ion-datetime
-                    id="task-time-picker"
+                    id="datetime-{{i}}"
+                    [(ngModel)]="task.taskDateTime"
                     presentation="time"
-                    [(ngModel)]="newTask.taskTime"
-                  cancel-text="Annuler"
-                  done-text="OK"
+                    display-format="HH:mm"
                   ></ion-datetime>
                 </ng-template>
               </ion-modal>
+              <ion-icon name="checkmark-circle-outline" size="large" (click)="saveTask(task)"></ion-icon>
+              <ion-icon name="close-circle-outline" size="large" (click)="cancelEditTask(task)"></ion-icon>
+            </ion-card>
+          </ng-container>
+        </div>
+      </ng-container>
 
-            <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-              <ion-icon name="checkmark-circle-outline" size="large" (click)="saveTaskCard(newTask.name, newTask.taskTime)"></ion-icon>
-              <ion-icon name="close-circle-outline" size="large" (click)="cancelTask()"></ion-icon>
-            </div>
+      <ion-card *ngIf="isAddingTask" [color]="colors[tasks.length % colors.length]">
+        <div class="task-item">
+          <ion-input [(ngModel)]="newTask.name" placeholder="Tâche" required></ion-input>
+          <ion-datetime-button datetime="task-time-picker"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="task-time-picker"
+                presentation="time"
+                [(ngModel)]="newTask.taskDateTime"
+                cancel-text="Annuler"
+                done-text="OK"
+              ></ion-datetime>
+            </ng-template>
+          </ion-modal>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <ion-icon name="checkmark-circle-outline" size="large" (click)="saveTaskCard(newTask.name, newTask.taskDateTime)"></ion-icon>
+            <ion-icon name="close-circle-outline" size="large" (click)="cancelTask()"></ion-icon>
           </div>
-        </ion-card>
+        </div>
+      </ion-card>
       <!-- Bouton pour ajouter une nouvelle tâche -->
       <div *ngIf="!isAddingTask" class="add-task">
         <ion-button class="add-task-button" (click)="addTaskCard()">
@@ -106,14 +108,14 @@
         </ion-button>
       </div>
     </ion-card>
+  </div>
 
+  <div class="memo-bottom-fixed">
     <div class="memo-container">
       <div class="memo-header">
-          <b>MEMO</b>
+        <b>MEMO</b>
       </div>
       <ion-textarea [(ngModel)]="postItMemo" class="memo" placeholder="Cliquez pour ajouter une note..."></ion-textarea>
     </div>
-
-</div>
-
+  </div>
 </ion-content>

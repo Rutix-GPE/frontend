@@ -18,10 +18,9 @@ export class TaskListComponent implements OnInit {
     newTask: Tasks = {
       description: "",
       id: 0,
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
     colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
@@ -39,7 +38,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.loadTasks();
-    
+
     const now = new Date();
     let dateFormatted = now.toLocaleDateString('fr-FR', {
       weekday: 'long',
@@ -61,7 +60,7 @@ export class TaskListComponent implements OnInit {
       this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
     });
   }
-  
+
   toggleEditTask(task: Tasks): void {
     task.isEditing = true;
   }
@@ -69,7 +68,7 @@ export class TaskListComponent implements OnInit {
     saveTask(task: Tasks): void {
     task.isEditing = false;
     if (task.id){
-      this.taskService.updateTask(task.id, { name: task.name, taskTime: task.taskTime }).subscribe(() => {
+      this.taskService.updateTask(task.id, { name: task.name, taskDateTime: task.taskDateTime }).subscribe(() => {
         this.loadTasks();
       });
     }
@@ -87,17 +86,16 @@ export class TaskListComponent implements OnInit {
   saveTaskCard(name: string, taskTime: string): void {
     this.newTask = {
       description: "",
-      taskDate: new Date().toISOString(),
       user: this.currentUser ? this.currentUser.id.toString() : "", // Assigner l'utilisateur actuel
       name: name,
-      taskTime: taskTime,
+      taskDateTime: taskTime,
       status: 'pending'
     };
 
     this.taskService.addTask(this.newTask).subscribe({
       next: (createdTask) => {
         this.tasks.push({ ...createdTask, isEditing: false });
-        this.isAddingTask = false; 
+        this.isAddingTask = false;
       },
       error: (error) => {
         console.error('Erreur lors de la création de la tâche:', error);
@@ -107,10 +105,9 @@ export class TaskListComponent implements OnInit {
     this.newTask = {
       description: "",
       id: 0,
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
   }
@@ -118,15 +115,14 @@ export class TaskListComponent implements OnInit {
   cancelTask() {
     this.newTask = {
       description: "",
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
     this.isAddingTask = false;
   }
-  
+
   calculateTop(date: string | Date): string {
     const taskDate = new Date(date);
     const hour = taskDate.getHours() + (taskDate.getMinutes() / 60);
@@ -135,7 +131,6 @@ export class TaskListComponent implements OnInit {
     const offset = (hour - hourStart) * pixelsPerHour;
     return `${offset}px`;
   }
-
 }
 
 
