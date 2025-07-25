@@ -56,6 +56,13 @@
               <ion-icon class="task-icon" name="pencil-outline" size="large" (click)="toggleEditTask(task)"></ion-icon>
             </ion-card>
             <ion-label class="task-time">{{ task.taskDateTime | date:'shortTime' }}</ion-label>
+            <ion-button
+              *ngIf="presentationMode"
+              fill="clear"
+              size="small"
+              (click)="notifyTask(task)">
+              <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+            </ion-button>
           </ng-container>
           <!-- Mode d'édition -->
           <ng-container  *ngIf="task.isEditing">

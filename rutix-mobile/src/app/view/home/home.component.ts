@@ -11,6 +11,8 @@ import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import {environment} from "../../../environments/environment";
+import {NotificationService} from "../../../core/notification/notification.service";
+import {UserService} from "../../../backend/user/user.service";
 
 @Component({
   selector: 'app-home',
@@ -29,6 +31,7 @@ export class HomePage implements OnInit {
   postItMemo: string = '';
   isEditingMemo = false;
   isAddingTask = false;
+  presentationMode = false;
   newTask: Tasks = {
     description: "",
     id: 0,
@@ -49,6 +52,8 @@ export class HomePage implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private menu: MenuController,
+    private notificationService: NotificationService,
+    private userService: UserService
   ) {}
 
 
@@ -60,6 +65,7 @@ export class HomePage implements OnInit {
        // this.loadUserResponsesForUser(this.currentUser?.id);
       }
     });
+    this.presentationMode = this.userService.presentationMode;
 
     const savedMemo = localStorage.getItem('postItMemo');
     if (savedMemo) {
@@ -73,7 +79,10 @@ export class HomePage implements OnInit {
     },1000)
   }
 
-
+  notifyTask(task: Tasks): void {
+    if (!this.presentationMode) { return; }
+    this.notificationService.sendNotification(`Il est l'heure de ${task.name}`);
+  }
 
   private updateDateTime(): void {
     const now = new Date();

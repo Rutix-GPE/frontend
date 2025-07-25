@@ -17,6 +17,26 @@ export class NotificationService {
   }
 
   /**
+   * Envoie une notification immédiate avec le titre et le corps passés.
+   */
+  async sendNotification(body: string, title = 'Rappel de tâche'): Promise<void> {
+    // s'assurer des permissions
+    await this.requestPermissions();
+    const id = Date.now() % 100000;
+    const options: ScheduleOptions = {
+      notifications: [
+        {
+          id,
+          title,
+          body,
+          schedule: { at: new Date(), allowWhileIdle: true }
+        }
+      ]
+    };
+    await LocalNotifications.schedule(options);
+  }
+
+  /**
    * Planifie une notification en précisant l'heure de déclenchement.
    */
   async scheduleNotificationAt(task: any, at: Date, notifId: number): Promise<void> {
@@ -40,7 +60,6 @@ export class NotificationService {
     // S'assurer d'avoir la permission
     await this.requestPermissions();
 
-    // On planifie dans 1s pour garantir le dispatch
     const at = new Date(Date.now() + 1000);
     const options: ScheduleOptions = {
       notifications: [{

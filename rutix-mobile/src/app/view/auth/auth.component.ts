@@ -28,7 +28,7 @@ export class AuthComponent {
     adress: ''
   };
   currentUser: User | null = null;
-  error = 'DEBUG VERSION';
+  error = '';
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.currentUser$.subscribe(user => this.currentUser = user);
