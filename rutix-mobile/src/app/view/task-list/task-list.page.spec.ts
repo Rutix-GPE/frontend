@@ -13,8 +13,7 @@ describe('TaskListComponent', () => {
       id: 1,
       name: 'Test Task',
       description: '',
-      taskDate: new Date().toISOString(),
-      taskTime: new Date().toISOString(),
+      taskDateTime: new Date().toISOString(),      
       status: 'pending',
       user: '1'
     }

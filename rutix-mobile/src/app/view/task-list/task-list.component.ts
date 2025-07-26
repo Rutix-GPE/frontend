@@ -25,11 +25,8 @@ export class TaskListComponent implements OnInit {
     };
     colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
     tasks: Tasks[] = [];
-    hours: string[] = [
-      '8:00', '9:00', '10:00', '11:00', '12:00',
-      '13:00', '14:00', '15:00', '16:00',
-      '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
-    ];
+    hours: string[] = [];
+    
     dateString: string = '';
     timeString: string = '';
 
@@ -37,24 +34,28 @@ export class TaskListComponent implements OnInit {
     private taskService: TaskService,) {}
 
   ngOnInit() {
+    for (let i = 0; i < 24; i++) {
+    this.hours.push(i.toString().padStart(2, '0') + ':00');
+    }
+
     this.loadTasks();
 
-    const now = new Date();
-    let dateFormatted = now.toLocaleDateString('fr-FR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long'
-    });
+  const now = new Date();
+  let dateFormatted = now.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long'
+  });
 
-    dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
-    const timeFormatted = now.toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    this.dateString = dateFormatted;
-    this.timeString = timeFormatted;
-  }
+  dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+  const timeFormatted = now.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 
+  this.dateString = dateFormatted;
+  this.timeString = timeFormatted;
+}
   loadTasks(): void {
     this.taskService.getTasksByUserForToday().subscribe(tasks => {
       this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
@@ -125,11 +126,11 @@ export class TaskListComponent implements OnInit {
 
   calculateTop(date: string | Date): string {
     const taskDate = new Date(date);
-    const hour = taskDate.getHours() + (taskDate.getMinutes() / 60);
-    const hourStart = 8;
+    const hour = taskDate.getHours();
+    const minute = taskDate.getMinutes();
     const pixelsPerHour = 100;
-    const offset = (hour - hourStart) * pixelsPerHour;
-    return `${offset}px`;
+    const top = hour * pixelsPerHour + (minute / 60) * pixelsPerHour;
+    return `${top}px`;
   }
 }
 
