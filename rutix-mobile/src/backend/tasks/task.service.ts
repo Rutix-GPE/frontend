@@ -16,7 +16,6 @@ import { CoreHttpClientPatch } from 'src/core/http/services/core-http-client-pat
     constructor(
       private httpGet: CoreHttpClientGet,
       private httpPost: CoreHttpClientPost,
-      //private httpPut: CoreHttpClientPut,
       private httpDelete: CoreHttpClientDelete,
       private httpPatch: CoreHttpClientPatch,
     ){}
@@ -42,4 +41,9 @@ import { CoreHttpClientPatch } from 'src/core/http/services/core-http-client-pat
       const today = new Date().toISOString().split('T')[0]; // Obtenir la date du jour au format 'YYYY-MM-DD'
       return this.httpGet.list(`user-task/v2/get-by-user-and-date/${today}`);
     }
+
+    deleteTask(id: number): Observable<any> {
+      return this.httpDelete.delete(`user-task/v2/delete/${id}`);
+    }
+
 }

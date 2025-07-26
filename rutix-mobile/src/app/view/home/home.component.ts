@@ -211,6 +211,19 @@ export class HomePage implements OnInit {
     this.isAddingTask = false;
   }
 
+  deleteTask(task: Tasks): void {
+    if (task.id) {
+      this.taskService.deleteTask(task.id).subscribe({
+        next: () => {
+          this.tasks = this.tasks.filter(t => t.id !== task.id);
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression', err);
+        }
+      });
+    }
+  }
+
   updateMemo() {
     this.isEditingMemo = true;
   }
