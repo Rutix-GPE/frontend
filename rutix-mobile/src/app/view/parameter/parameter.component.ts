@@ -7,6 +7,7 @@ import { User } from '../../../backend/user/user.interface';
 import { environment } from '../../../environments/environment';
 import {UserService} from "../../../backend/user/user.service";
 import {NotificationService} from "../../../core/notification/notification.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-parameter',
@@ -25,7 +26,8 @@ export class ParameterComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private avatarService: AvatarService,
     private userService: UserService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +92,11 @@ export class ParameterComponent implements OnInit, OnDestroy {
     });
   }
 
+  disconect() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   // getters/setters délégués au UserService
   get notificationsActive(): boolean {
     return this.userService.notificationsActive;
@@ -112,5 +119,6 @@ export class ParameterComponent implements OnInit, OnDestroy {
 
   onPresentationToggle(event: CustomEvent) {
     this.presentationMode = event.detail.checked;
+    console.log(this.presentationMode);
   }
 }

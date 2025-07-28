@@ -15,6 +15,7 @@
       alt="Avatar"
       class="avatar-img"
     />
+    <ion-spinner *ngIf="!currentAvatarUrl" name="dots"></ion-spinner>
 
     <ion-button fill="clear" (click)="next()">
       <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
@@ -26,14 +27,14 @@
   </ion-button>
 
   <!-- Toggle Notifications -->
-  <ion-item lines="full">
+  <!--<ion-item lines="full">
     <ion-label>Notifications</ion-label>
     <ion-toggle
       slot="end"
       [checked]="notificationsActive"
       (ionChange)="onNotificationsToggle($event)"
     ></ion-toggle>
-  </ion-item>
+  </ion-item>-->
 
   <!-- Toggle Mode Présentation -->
   <ion-item lines="full">
@@ -49,6 +50,12 @@
     <ion-label>Test Notification</ion-label>
     <ion-button slot="end" (click)="testNotification()">
       Lancer le test
+    </ion-button>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-button slot="end" (click)="disconect()">
+      Déconnexion
     </ion-button>
   </ion-item>
 

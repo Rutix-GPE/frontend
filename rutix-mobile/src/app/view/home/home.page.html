@@ -46,6 +46,7 @@
     </ion-row>
 
     <!-- Liste des tâches (petites cartes) -->
+    <ion-spinner name="dots" *ngIf="tasks.length<=0"></ion-spinner>
     <ion-card class="task-list card-white">
       <ng-container  *ngFor="let task of tasks; let i = index" >
         <!-- Mode d'affichage -->
@@ -61,7 +62,6 @@
               fill="clear"
               size="small"
               (click)="notifyTask(task)">
-              <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
             </ion-button>
           </ng-container>
           <!-- Mode d'édition -->
@@ -105,7 +105,7 @@
 
           <div style="display: flex; justify-content: space-between; margin-top: 10px;">
             <ion-icon name="checkmark-circle-outline" size="large" (click)="saveTaskCard(newTask.name, newTask.taskDateTime)"></ion-icon>
-            <ion-icon name="close-circle-outline" size="large" (click)="cancelTask()"></ion-icon>          
+            <ion-icon name="close-circle-outline" size="large" (click)="cancelTask()"></ion-icon>
           </div>
         </div>
       </ion-card>

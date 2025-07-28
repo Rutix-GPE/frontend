@@ -66,6 +66,7 @@ export class AuthComponent {
           this.fetchCurrentUser();
         },
         error: (error) => {
+          this.error = error;
           if (error.status === 401) {
             console.error('Wrong password / username / email');
           } else if (error.status === 404) {

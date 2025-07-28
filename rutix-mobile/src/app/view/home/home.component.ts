@@ -9,7 +9,7 @@ import { CategorieService, Category } from 'src/backend/categorie/categorie.serv
 import { TaskService } from 'src/backend/tasks/task.service';
 import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import {MenuController, ViewWillEnter} from '@ionic/angular';
 import {environment} from "../../../environments/environment";
 import {NotificationService} from "../../../core/notification/notification.service";
 import {UserService} from "../../../backend/user/user.service";
@@ -19,7 +19,7 @@ import {UserService} from "../../../backend/user/user.service";
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, ViewWillEnter {
   questions: Question[] = [];
   protected baseApi = environment.backend_url;
   userResponseslist: { [questionId: number]: Response | null } = {};
@@ -65,8 +65,8 @@ export class HomePage implements OnInit {
        // this.loadUserResponsesForUser(this.currentUser?.id);
       }
     });
-    this.presentationMode = this.userService.presentationMode;
-
+    this.refreshPresentationMode();
+    console.log(this.presentationMode);
     const savedMemo = localStorage.getItem('postItMemo');
     if (savedMemo) {
       this.postItMemo = savedMemo;
@@ -79,10 +79,19 @@ export class HomePage implements OnInit {
     },1000)
   }
 
+  private refreshPresentationMode(): void {
+    this.presentationMode = this.userService.presentationMode;
+  }
+
   notifyTask(task: Tasks): void {
     if (!this.presentationMode) { return; }
     this.notificationService.sendNotification(`Il est l'heure de ${task.name}`);
   }
+
+  ionViewWillEnter(): void {
+    this.refreshPresentationMode();
+  }
+
 
   private updateDateTime(): void {
     const now = new Date();
