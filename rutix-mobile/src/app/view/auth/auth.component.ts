@@ -84,6 +84,9 @@ export class AuthComponent {
           console.log(response);
           this.authService.login(this.formData.username, this.formData.password).subscribe({
             next: (response) => {
+              this.formData.username = '';
+              this.formData.password = '';
+              this.error = '';
               localStorage.setItem('token', response.token);
               this.fetchCurrentUser();
             },
@@ -106,8 +109,14 @@ export class AuthComponent {
         this.authService.setCurrentUser(user);
         console.log('Current User:', this.currentUser);
         if (this.isLoginMode) {
+          this.formData.username = '';
+          this.formData.password = '';
+          this.error = '';
           this.router.navigate(['/home']);
         } else {
+          this.formData.username = '';
+          this.formData.password = '';
+          this.error = '';
           this.router.navigate(['/question']);
         }
       },

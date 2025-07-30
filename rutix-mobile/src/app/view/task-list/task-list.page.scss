@@ -51,8 +51,11 @@
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   color: #000;
+  background-color: rgba(80, 120, 80, 0.18);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .task-name {
