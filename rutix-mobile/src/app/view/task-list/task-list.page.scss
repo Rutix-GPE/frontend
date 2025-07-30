@@ -43,8 +43,8 @@
 
 .task-card {
   position: absolute;
-  width: 90%;
-  margin-left: 10px;
+  width: 85%;
+  margin-left: 55px;
   border-radius: 10px;
   padding: 10px;
   display: flex;
@@ -70,7 +70,7 @@
 
 .add-task-button-wrapper {
   position: fixed;
-  bottom: -5px;  
+  bottom: -5px;
   left: 50px;
   transform: translateX(29%);
   z-index: 20;

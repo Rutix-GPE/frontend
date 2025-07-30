@@ -89,6 +89,7 @@ export class HomePage implements OnInit, ViewWillEnter {
   }
 
   ionViewWillEnter(): void {
+    this.loadTasks();
     this.refreshPresentationMode();
   }
 
@@ -151,10 +152,15 @@ export class HomePage implements OnInit, ViewWillEnter {
   }
 
   loadTasks(): void {
+    const now = new Date();
     this.taskService.getTasksByUserForToday().subscribe(tasks => {
-      this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
+      this.tasks = tasks
+        .filter(task => new Date(task.taskDateTime).getTime() >= now.getTime())
+        .map(task => ({ ...task, isEditing: false }))
+        .sort((a, b) => new Date(a.taskDateTime).getTime() - new Date(b.taskDateTime).getTime());
     });
   }
+
 
   toggleEditTask(task: Tasks): void {
     task.isEditing = true;

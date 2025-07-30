@@ -7,7 +7,6 @@ import { User } from 'src/backend/user/user.interface';
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AuthComponent {
@@ -35,6 +34,7 @@ export class AuthComponent {
   }
 
   onSwitchMode() {
+    this.error = '';
     this.isLoginMode = !this.isLoginMode;
     if (!this.isLoginMode) {
       this.step = 1;
@@ -66,12 +66,14 @@ export class AuthComponent {
           this.fetchCurrentUser();
         },
         error: (error) => {
-          this.error = error;
           if (error.status === 401) {
+            this.error = 'Nom d\'utilisateur ou mot de passe incorrect.';
             console.error('Wrong password / username / email');
           } else if (error.status === 404) {
+            this.error = "Utilisateur introuvable.";
             console.error('User not found');
           } else {
+            this.error = 'Problème réseau'
             console.error('Problème réseau');
           }
         }
