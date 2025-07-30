@@ -2,8 +2,6 @@
 .oc-style {
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 
@@ -13,7 +11,15 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 2vh 5vw; /* Espace autour basé sur la taille de l'écran */
+  padding: 2vh 5vw;
+}
+
+.main-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .menu-button {
@@ -68,16 +74,30 @@
 }
 
 /* Memo */
+.memo-bottom-fixed {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  background: transparent;
+  pointer-events: none;
+}
+
 .memo-container {
   position: relative;
   padding: 15px;
   background-color: white;
-  border-radius: 8px;
-  margin: 20px 0;
-  width: 90%; /* Utiliser presque toute la largeur */
-  max-width: 500px; /* Définir une largeur maximale */
-  max-height: 200px; /* Ajuster la hauteur */
+  border-radius: 10px;
+  margin: 0 0 10px 0;
+  width: 90%;
+  max-width: 500px;
   box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+  pointer-events: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .memo {
@@ -138,7 +158,7 @@ ion-button {
 
 .add-task-button{
   --background: #DCECD0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding:0;
 }
 
@@ -206,12 +226,56 @@ ion-button {
   border-radius: 10px;
 }
 
+.title-weather {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #96b87c;
+}
+
+.temp-weather {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #96b87c;
+  margin-left: 20px;
+}
+
 .weather {
   width: 220px;
   height: 120px;
+  display: flex;
+  flex-direction: column;
 }
 
 .character {
   width: 90px;
   height: 120px;
+}
+
+.avatar-img {
+  /* taille fixe */
+  width: 150px;
+  height: 150px;
+
+  object-fit: cover;    /* recadre si besoin */
+  border-radius: 8px;   /* coins arrondis (mettre 50% pour un cercle) */
+
+  /* centre visuellement si space-between crée un petit décalage */
+  margin: 0 1rem;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 0 0 0 0;
+  }
+  .memo-container {
+    width: 98%;
+    margin: 0 0 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

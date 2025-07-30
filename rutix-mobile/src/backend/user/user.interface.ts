@@ -10,4 +10,6 @@ username: string,
 role: string,
 creationDate: string,
 updatedDate: string,
+memo: string | null,
+  avatarFile: string,
 }

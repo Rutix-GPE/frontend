@@ -1,0 +1,68 @@
+<!-- parameter.component.html -->
+<ion-card *ngIf="!loading; else spinTpl" class="avatar-card">
+  <ion-card-header>
+    <ion-card-title>Choisissez votre avatar</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content class="avatar-content">
+    <ion-button fill="clear" (click)="prev()">
+      <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+    <img
+      *ngIf="currentAvatarUrl"
+      [src]="baseApi + 'avatar/get/' + currentAvatarUrl"
+      alt="Avatar"
+      class="avatar-img"
+    />
+    <ion-spinner *ngIf="!currentAvatarUrl" name="dots"></ion-spinner>
+
+    <ion-button fill="clear" (click)="next()">
+      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-card-content>
+
+  <ion-button expand="block" (click)="save()">
+    Enregistrer l’avatar
+  </ion-button>
+
+  <!-- Toggle Notifications -->
+  <!--<ion-item lines="full">
+    <ion-label>Notifications</ion-label>
+    <ion-toggle
+      slot="end"
+      [checked]="notificationsActive"
+      (ionChange)="onNotificationsToggle($event)"
+    ></ion-toggle>
+  </ion-item>-->
+
+  <!-- Toggle Mode Présentation -->
+  <ion-item lines="full">
+    <ion-label>Mode Présentation</ion-label>
+    <ion-toggle
+      slot="end"
+      [checked]="presentationMode"
+      (ionChange)="onPresentationToggle($event)"
+    ></ion-toggle>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-label>Test Notification</ion-label>
+    <ion-button slot="end" (click)="testNotification()">
+      Lancer le test
+    </ion-button>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-button slot="end" (click)="disconect()">
+      Déconnexion
+    </ion-button>
+  </ion-item>
+
+</ion-card>
+
+<ng-template #spinTpl>
+  <div class="spinner-wrapper">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ng-template>

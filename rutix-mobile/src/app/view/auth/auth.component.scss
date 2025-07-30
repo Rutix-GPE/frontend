@@ -3,7 +3,7 @@
   max-width: 400px;
   margin: 10% auto;
   padding: 20px;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -84,4 +84,12 @@
     font-size: 1.1rem;
     padding: 15px;
   }
+}
+
+
+.card-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 4px;
 }

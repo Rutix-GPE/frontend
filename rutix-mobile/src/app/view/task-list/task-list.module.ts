@@ -18,4 +18,4 @@ import { TaskListComponent } from './task-list.component';
     TaskListComponent
   ]
 })
-export class RoutineListPageModule {}
+export class TaskListPageModule {}

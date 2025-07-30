@@ -1,85 +1,40 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title *ngIf="currentQuestion">{{ currentQuestion.name }}</ion-title>
+    <ion-title class="ion-text-center">Questionnaire</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="currentQuestion">
-  <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col size="12" size-md="8">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{ currentQuestion.content }}</ion-card-title>
-          </ion-card-header>
+<ion-content *ngIf="currentQuestion" class="ion-padding">
+  <div class="question-container">
+    <ion-card class="question-card">
+      <ion-card-header>
+        <ion-card-title class="question-title">{{ currentQuestion.question }}</ion-card-title>
+      </ion-card-header>
 
-          <ion-card-content>
-            <!-- Input selon le type de la question -->
-            <ion-item *ngIf="currentQuestion.type === 'text' || currentQuestion.type === 'textarea'" lines="none">
-              <ion-input [(ngModel)]="currentResponse" type="text" class="input-highlight" placeholder="Réponse"></ion-input>
+      <ion-card-content>
+        <ion-list class="answer-list">
+          <ion-radio-group [(ngModel)]="currentResponse">
+            <ion-item *ngFor="let answer of currentQuestion.answer" 
+                     class="answer-item" 
+                     lines="none"
+                     (click)="currentResponse = answer">
+              <ion-label class="answer-label">{{ answer }}</ion-label>
+              <ion-radio [value]="answer" slot="start" class="custom-radio"></ion-radio>
             </ion-item>
+          </ion-radio-group>
+        </ion-list>
 
-            <!-- Input de type number avec validation -->
-            <ion-item *ngIf="currentQuestion.type === 'number'" lines="none">
-              <ion-input [(ngModel)]="currentResponse" type="number" class="input-highlight" placeholder="Réponse" (ionChange)="validateCurrentResponse()"></ion-input>
-            </ion-item>
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-            <!-- Message d'erreur pour les réponses invalides de type number -->
-            <div *ngIf="errorMessage" style="color: red; padding-left: 16px;">
-              {{ errorMessage }}
-            </div>
-
-            <!-- Time selection -->
-            <ion-item *ngIf="currentQuestion.type === 'time'" lines="none">
-              <ion-datetime
-                [(ngModel)]="currentResponse"
-                presentation="time"
-                display-format="HH:mm"
-                picker-format="HH:mm"
-                placeholder="Sélectionner l'heure"
-                hour-cycle="h23">
-              </ion-datetime>
-            </ion-item>
-
-            <!-- Checkboxes -->
-            <ion-list *ngIf="currentQuestion.type === 'checkbox' && currentQuestion.choice">
-              <ion-item *ngFor="let choice of currentQuestion.choice" lines="none">
-                <ion-label>{{ choice }}</ion-label>
-                <ion-checkbox
-                  slot="start"
-                  (ionChange)="onCheckboxChange(choice, $event)"
-                  [checked]="currentResponse?.includes(choice)">
-                </ion-checkbox>
-              </ion-item>
-            </ion-list>
-
-            <!-- Radio buttons -->
-            <ion-list *ngIf="currentQuestion.type === 'radio' && currentQuestion.choice">
-              <ion-radio-group [(ngModel)]="currentResponse">
-                <ion-item *ngFor="let choice of currentQuestion.choice" lines="none">
-                  <ion-label>{{ choice }}</ion-label>
-                  <ion-radio [value]="choice" slot="start"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-footer>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Précédent</ion-button>
-            </ion-buttons>
-            <ion-buttons slot="end">
-              <!-- Désactiver le bouton Suivant si la réponse n'est pas valide -->
-              <ion-button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()" [disabled]="isNextDisabled()">Suivant</ion-button>
-            </ion-buttons>
-
-            <!-- Show Submit button only at the end -->
-            <ion-button *ngIf="currentQuestionIndex === questions.length - 1" expand="block" (click)="onSubmit()" [disabled]="isNextDisabled()">Soumettre</ion-button>
-          </ion-toolbar>
-        </ion-footer>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <div class="navigation-buttons">
+      <ion-button expand="block" (click)="nextQuestion()" [disabled]="isNextDisabled()" class="next-button">
+        Suivant
+        <ion-icon name="arrow-forward" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

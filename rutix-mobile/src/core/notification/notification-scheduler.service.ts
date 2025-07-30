@@ -41,7 +41,7 @@ export class NotificationSchedulerService {
         const earlyId = this.getEarlyNotifId(task);
         const exactId = this.getExactNotifId(task);
 
-        const taskTime = new Date(task.taskTime);
+        const taskTime = new Date(task.taskDateTime);
         const earlyTime = new Date(taskTime.getTime() - 30 * 60000); // 30 minutes avant
 
         // Si la notif "30 min avant" n'est pas présente, la planifier

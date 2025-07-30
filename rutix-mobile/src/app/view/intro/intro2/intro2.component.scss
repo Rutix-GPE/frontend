@@ -1,0 +1,117 @@
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #c1efae;
+  --background: #c1efae;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 40px;
+    margin-top: 60px;
+    font-size: 3rem;
+    font-weight: 400;
+    font-family: 'Press Start 2P', cursive;
+    color: #000;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .text-container {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+
+    p {
+      font-size: 1.2rem;
+      margin: 5px 0;
+      color: #030303;
+      font-family: Arial, sans-serif;
+      width: 100%;
+      text-align: center;
+      line-height: 1.2;
+      padding: 0;
+    }
+  }
+
+  .image-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo-image {
+      width: 300px;
+      height: auto;
+    }
+  }
+
+  .next-button {
+    margin-top: 20px;
+    font-size: 1rem;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #c1efae;
+    --background: #fff;
+    --border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+    ion-icon {
+      width: 32px;
+      height: 32px;
+      color: #28a745;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .intro-content {
+    h2 {
+      font-size: 4rem;
+    }
+
+    .text-container {
+      max-width: 300px;
+      padding: 15px 20px;
+
+      p {
+        font-size: 1.1rem;
+      }
+    }
+
+    .image-container {
+      .logo-image {
+        width: 400px;
+      }
+    }
+
+    .next-button {
+      max-width: 150px;
+      padding: 10px;
+      font-size: 1.2rem;
+
+      ion-icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

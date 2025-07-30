@@ -18,14 +18,15 @@ export class TaskListComponent implements OnInit {
     newTask: Tasks = {
       description: "",
       id: 0,
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
     colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
     tasks: Tasks[] = [];
+    hours: string[] = [];
+    
     dateString: string = '';
     timeString: string = '';
 
@@ -33,30 +34,34 @@ export class TaskListComponent implements OnInit {
     private taskService: TaskService,) {}
 
   ngOnInit() {
+    for (let i = 0; i < 24; i++) {
+    this.hours.push(i.toString().padStart(2, '0') + ':00');
+    }
+
     this.loadTasks();
-    
-    const now = new Date();
-    let dateFormatted = now.toLocaleDateString('fr-FR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long'
-    });
 
-    dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
-    const timeFormatted = now.toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    this.dateString = dateFormatted;
-    this.timeString = timeFormatted;
-  }
+  const now = new Date();
+  let dateFormatted = now.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long'
+  });
 
+  dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+  const timeFormatted = now.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  this.dateString = dateFormatted;
+  this.timeString = timeFormatted;
+}
   loadTasks(): void {
     this.taskService.getTasksByUserForToday().subscribe(tasks => {
       this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
     });
   }
-  
+
   toggleEditTask(task: Tasks): void {
     task.isEditing = true;
   }
@@ -64,7 +69,7 @@ export class TaskListComponent implements OnInit {
     saveTask(task: Tasks): void {
     task.isEditing = false;
     if (task.id){
-      this.taskService.updateTask(task.id, { name: task.name, taskTime: task.taskTime }).subscribe(() => {
+      this.taskService.updateTask(task.id, { name: task.name, taskDateTime: task.taskDateTime }).subscribe(() => {
         this.loadTasks();
       });
     }
@@ -82,17 +87,16 @@ export class TaskListComponent implements OnInit {
   saveTaskCard(name: string, taskTime: string): void {
     this.newTask = {
       description: "",
-      taskDate: new Date().toISOString(),
       user: this.currentUser ? this.currentUser.id.toString() : "", // Assigner l'utilisateur actuel
       name: name,
-      taskTime: taskTime,
+      taskDateTime: taskTime,
       status: 'pending'
     };
 
     this.taskService.addTask(this.newTask).subscribe({
       next: (createdTask) => {
         this.tasks.push({ ...createdTask, isEditing: false });
-        this.isAddingTask = false; 
+        this.isAddingTask = false;
       },
       error: (error) => {
         console.error('Erreur lors de la création de la tâche:', error);
@@ -102,10 +106,9 @@ export class TaskListComponent implements OnInit {
     this.newTask = {
       description: "",
       id: 0,
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
   }
@@ -113,15 +116,35 @@ export class TaskListComponent implements OnInit {
   cancelTask() {
     this.newTask = {
       description: "",
-      taskDate: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
+      taskDateTime: new  Date().toISOString(),
       status: 'pending'
     };
     this.isAddingTask = false;
   }
 
+  calculateTop(date: string | Date): string {
+    const taskDate = new Date(date);
+    const hour = taskDate.getHours();
+    const minute = taskDate.getMinutes();
+    const pixelsPerHour = 100;
+    const top = hour * pixelsPerHour + (minute / 60) * pixelsPerHour;
+    return `${top}px`;
+  }
+
+  deleteTask(task: Tasks): void {
+  if (task.id) {
+    this.taskService.deleteTask(task.id).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.id !== task.id);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression', err);
+      }
+    });
+  }
+}
 }
 
 

@@ -17,6 +17,24 @@ export class UserService {
     private httpPatch: CoreHttpClientPatch,
     private httpDelete: CoreHttpClientDelete
   ) {}
+  private _notificationsActive: boolean = false;
+  private _presentationMode: boolean = false;
+
+  // Getter setter pour notificationsActive
+  get notificationsActive(): boolean {
+    return this._notificationsActive;
+  }
+  set notificationsActive(value: boolean) {
+    this._notificationsActive = value;
+  }
+
+  // Getter setter pour presentationMode
+  get presentationMode(): boolean {
+    return this._presentationMode;
+  }
+  set presentationMode(value: boolean) {
+    this._presentationMode = value;
+  }
 
   listAll(): Observable<User[]> {
     return this.httpGet.list('user');
@@ -32,5 +50,9 @@ export class UserService {
 
   delete(id: number): Observable<void> {
     return this.httpDelete.delete(`user/${id}`);
+  }
+
+  updateMemo(memo: string): Observable<any> {
+    return this.httpPatch.patch(`user/update-memo`, {memo: memo});
   }
 }

@@ -10,7 +10,9 @@
     <h2 *ngIf="!isLoginMode && step === 1" class="page-title">Inscription - Étape 1</h2>
     <h2 *ngIf="!isLoginMode && step === 2" class="page-title">Inscription - Étape 2</h2>
     <h2 *ngIf="!isLoginMode && step === 3" class="page-title">Inscription - Étape 3</h2>
+    <div class="card-error">
     <h4>{{error}}</h4>
+    </div>
     <!-- Formulaire de connexion/inscription -->
     <form (ngSubmit)="onSubmit()" class="form">
       <!-- Connexion -->

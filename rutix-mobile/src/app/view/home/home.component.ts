@@ -9,15 +9,19 @@ import { CategorieService, Category } from 'src/backend/categorie/categorie.serv
 import { TaskService } from 'src/backend/tasks/task.service';
 import { Tasks } from 'src/backend/tasks/task.interface';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import {MenuController, ViewWillEnter} from '@ionic/angular';
+import {environment} from "../../../environments/environment";
+import {NotificationService} from "../../../core/notification/notification.service";
+import {UserService} from "../../../backend/user/user.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, ViewWillEnter {
   questions: Question[] = [];
+  protected baseApi = environment.backend_url;
   userResponseslist: { [questionId: number]: Response | null } = {};
   currentUser: User | null = null;
   showResponses = false;
@@ -27,13 +31,13 @@ export class HomePage implements OnInit {
   postItMemo: string = '';
   isEditingMemo = false;
   isAddingTask = false;
+  presentationMode = false;
   newTask: Tasks = {
     description: "",
     id: 0,
-    taskDate: "",
+    taskDateTime: new  Date().toISOString(),
     user: "",
     name: '',
-    taskTime: new  Date().toISOString(),
     status: 'pending'
   };
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
@@ -48,39 +52,68 @@ export class HomePage implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private menu: MenuController,
+    private notificationService: NotificationService,
+    private userService: UserService
   ) {}
 
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.loadQuestions();
+      //this.loadQuestions();
       if (this.currentUser != null) {
-        this.loadUserResponsesForUser(this.currentUser?.id);
+       // this.loadUserResponsesForUser(this.currentUser?.id);
       }
     });
-
+    this.refreshPresentationMode();
+    console.log(this.presentationMode);
     const savedMemo = localStorage.getItem('postItMemo');
     if (savedMemo) {
       this.postItMemo = savedMemo;
     }
     this.loadTasks();
     this.loadMemo();
+    this.updateDateTime()
+    setInterval(() => {
+      this.updateDateTime()
+    },1000)
+  }
 
+  private refreshPresentationMode(): void {
+    this.presentationMode = this.userService.presentationMode;
+  }
+
+  notifyTask(task: Tasks): void {
+    if (!this.presentationMode) { return; }
+    this.notificationService.sendNotification(`Il est l'heure de ${task.name}`);
+  }
+
+  ionViewWillEnter(): void {
+    this.loadTasks();
+    this.refreshPresentationMode();
+  }
+
+
+  private updateDateTime(): void {
     const now = new Date();
+
     let dateFormatted = now.toLocaleDateString('fr-FR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long'
     });
     dateFormatted = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+
     const timeFormatted = now.toLocaleTimeString('fr-FR', {
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      //second: '2-digit'
     });
+
     this.dateString = dateFormatted;
     this.timeString = timeFormatted;
   }
+
 
   fetchCategories(): void {
     this.categorieService.listAll().subscribe(
@@ -119,10 +152,15 @@ export class HomePage implements OnInit {
   }
 
   loadTasks(): void {
+    const now = new Date();
     this.taskService.getTasksByUserForToday().subscribe(tasks => {
-      this.tasks = tasks.map(task => ({ ...task, isEditing: false }));
+      this.tasks = tasks
+        .filter(task => new Date(task.taskDateTime).getTime() >= now.getTime())
+        .map(task => ({ ...task, isEditing: false }))
+        .sort((a, b) => new Date(a.taskDateTime).getTime() - new Date(b.taskDateTime).getTime());
     });
   }
+
 
   toggleEditTask(task: Tasks): void {
     task.isEditing = true;
@@ -131,7 +169,7 @@ export class HomePage implements OnInit {
   saveTask(task: Tasks): void {
     task.isEditing = false;
     if (task.id){
-      this.taskService.updateTask(task.id, { name: task.name, taskTime: task.taskTime }).subscribe(() => {
+      this.taskService.updateTask(task.id, { name: task.name, taskDateTime: task.taskDateTime }).subscribe(() => {
         this.loadTasks();
       });
     }
@@ -149,10 +187,9 @@ export class HomePage implements OnInit {
   saveTaskCard(name: string, taskTime: string): void {
     this.newTask = {
       description: "",
-      taskDate: new Date().toISOString(),
       user: this.currentUser ? this.currentUser.id.toString() : "", // Assigner l'utilisateur actuel
       name: name,
-      taskTime: taskTime,
+      taskDateTime: taskTime,
       status: 'pending'
     };
 
@@ -171,24 +208,35 @@ export class HomePage implements OnInit {
     this.newTask = {
       description: "",
       id: 0,
-      taskDate: "",
+      taskDateTime: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
       status: 'pending'
     };
   }
-  
+
   cancelTask() {
     this.newTask = {
       description: "",
-      taskDate: "",
+      taskDateTime: "",
       user: "",
       name: '',
-      taskTime: new  Date().toISOString(),
       status: 'pending'
     };
     this.isAddingTask = false;
+  }
+
+  deleteTask(task: Tasks): void {
+    if (task.id) {
+      this.taskService.deleteTask(task.id).subscribe({
+        next: () => {
+          this.tasks = this.tasks.filter(t => t.id !== task.id);
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression', err);
+        }
+      });
+    }
   }
 
   updateMemo() {
