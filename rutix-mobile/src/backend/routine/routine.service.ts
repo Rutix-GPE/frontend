@@ -9,6 +9,6 @@ export class RoutineService {
   constructor(private httpGet: CoreHttpClientGet) {}
 
   listRoutinesByUser(): Observable<any[]> {
-    return this.httpGet.list('routine/v2/get-by-user');
+    return this.httpGet.list('routine/get-by-user');
   }
 }
