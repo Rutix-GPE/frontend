@@ -75,7 +75,7 @@
            [ngClass]="colors[i % colors.length]">
 
         <div class="task-name">{{ task.name }}</div>
-        <div class="task-time">{{ task.taskDateTime | date:'HH:mm' }}</div>
+        <div class="task-time">{{ task.taskDateTime | date:'HH:mm':'UTC' }}</div>
         <ion-icon class="edit-icon" name="pencil-outline" (click)="toggleEditTask(task)"></ion-icon>
       </div>
 

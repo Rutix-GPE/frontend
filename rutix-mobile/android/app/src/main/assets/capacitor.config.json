@@ -1,9 +1,0 @@
-{
-	"appId": "io.ionic.starter",
-	"appName": "rutix-mobile",
-	"webDir": "www",
-	"server": {
-		"androidScheme": "http",
-		"cleartext": true
-	}
-}

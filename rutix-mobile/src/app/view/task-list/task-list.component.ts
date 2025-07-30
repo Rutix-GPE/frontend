@@ -26,7 +26,7 @@ export class TaskListComponent implements OnInit {
     colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light'];
     tasks: Tasks[] = [];
     hours: string[] = [];
-    
+
     dateString: string = '';
     timeString: string = '';
 
@@ -126,12 +126,13 @@ export class TaskListComponent implements OnInit {
 
   calculateTop(date: string | Date): string {
     const taskDate = new Date(date);
-    const hour = taskDate.getHours();
-    const minute = taskDate.getMinutes();
+    const hour = taskDate.getUTCHours();  // Utiliser getUTCHours pour l'heure en UTC
+    const minute = taskDate.getUTCMinutes();  // Utiliser getUTCMinutes pour les minutes en UTC
     const pixelsPerHour = 100;
     const top = hour * pixelsPerHour + (minute / 60) * pixelsPerHour;
     return `${top}px`;
   }
+
 
   deleteTask(task: Tasks): void {
   if (task.id) {

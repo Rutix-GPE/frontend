@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backend_url: 'http://server-pierre.ddns.net:8000/'
+  backend_url: 'https://rutix.voglimacci.fr/'
 };

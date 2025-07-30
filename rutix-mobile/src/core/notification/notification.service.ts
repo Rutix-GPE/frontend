@@ -22,14 +22,14 @@ export class NotificationService {
   async sendNotification(body: string, title = 'Rappel de tâche'): Promise<void> {
     // s'assurer des permissions
     await this.requestPermissions();
-    const id = Date.now() % 100000;
+    const at = new Date(Date.now() + 1000);
     const options: ScheduleOptions = {
       notifications: [
         {
-          id,
+          id :Date.now() % 100000,
           title,
           body,
-          schedule: { at: new Date(), allowWhileIdle: true }
+          schedule: { at, allowWhileIdle: true }
         }
       ]
     };

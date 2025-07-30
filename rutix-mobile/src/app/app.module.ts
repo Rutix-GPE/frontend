@@ -26,13 +26,15 @@ registerLocaleData(localeFr, 'fr');
     QuestionModule,
     LayoutModule,
     IntroModule,
-    ParameterModule
+    ParameterModule,
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: 'fr-FR' },
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
     provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent],
+  exports: [
+  ]
 })
 export class AppModule { }

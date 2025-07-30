@@ -35,7 +35,11 @@ export class HomePage implements OnInit, ViewWillEnter {
   newTask: Tasks = {
     description: "",
     id: 0,
-    taskDateTime: new  Date().toISOString(),
+    taskDateTime: (() => {
+      const parisDate = new Date();
+      parisDate.setHours(parisDate.getHours() + 2);
+      return parisDate.toISOString();
+    })(),
     user: "",
     name: '',
     status: 'pending'
@@ -86,6 +90,7 @@ export class HomePage implements OnInit, ViewWillEnter {
   notifyTask(task: Tasks): void {
     if (!this.presentationMode) { return; }
     this.notificationService.sendNotification(`Il est l'heure de ${task.name}`);
+    //this.notificationService.sendTestNotification();
   }
 
   ionViewWillEnter(): void {
@@ -151,6 +156,17 @@ export class HomePage implements OnInit, ViewWillEnter {
     });
   }
 
+  adjustToParisTime(task:Tasks): void {
+    // Créez un objet Date à partir de la valeur ISO (en UTC)
+    const date = new Date(task.taskDateTime);
+
+    // Appliquez le décalage horaire de Paris (UTC +2 en été, UTC +1 en hiver)
+    date.setHours(date.getHours() + 2);
+
+    // Mettez à jour la tâche avec l'heure corrigée
+    task.taskDateTime = date.toISOString();
+  }
+
   loadTasks(): void {
     const now = new Date();
     this.taskService.getTasksByUserForToday().subscribe(tasks => {
@@ -168,12 +184,13 @@ export class HomePage implements OnInit, ViewWillEnter {
 
   saveTask(task: Tasks): void {
     task.isEditing = false;
-    if (task.id){
+    if (task.id) {
       this.taskService.updateTask(task.id, { name: task.name, taskDateTime: task.taskDateTime }).subscribe(() => {
         this.loadTasks();
       });
     }
   }
+
 
   cancelEditTask(task: Tasks): void {
     task.isEditing = false;

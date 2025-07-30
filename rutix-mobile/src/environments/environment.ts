@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
    //backend_url: 'http://192.168.1.153/',
-  backend_url: 'http://localhost:8000/',
+  //backend_url: 'http://localhost:8000/',
+  backend_url: 'https://rutix.voglimacci.fr/',
   // backend_url: 'http://server-pierre.ddns.net:9090/',
 };
 
